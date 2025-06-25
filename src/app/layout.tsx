@@ -1,6 +1,15 @@
-import type { Metadata } from 'next';
-
 import '@/shared/ui/styles/global.scss';
+import '@ant-design/v5-patch-for-react-19';
+
+import { AntdRegistry } from '@ant-design/nextjs-registry';
+import { Layout } from 'antd';
+import { Content, Footer } from 'antd/es/layout/layout';
+import type { Metadata } from 'next';
+import React from 'react';
+
+import ThemeProvider from '@/shared/providers/ThemeProvider';
+
+import Header from '@/components/Header';
 
 export const metadata: Metadata = {
   title: 'DRM Platform',
@@ -14,7 +23,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AntdRegistry>
+          <ThemeProvider>
+            <Layout>
+              <Header />
+              <Content>
+                <main>{children}</main>
+              </Content>
+              <Footer>
+                <span>DRMP - 2025</span>
+              </Footer>
+            </Layout>
+          </ThemeProvider>
+        </AntdRegistry>
+      </body>
     </html>
   );
 }
