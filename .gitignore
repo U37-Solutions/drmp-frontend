@@ -18,6 +18,9 @@
 # production
 /build
 
+# IDE configs
+.idea
+
 # misc
 .DS_Store
 *.pem
