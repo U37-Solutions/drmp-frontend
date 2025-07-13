@@ -1,0 +1,20 @@
+name: 🆕🔀 Pull Request [develop]
+ 
+on:
+  pull_request:
+    branches: ["develop"]
+
+env:
+  NAMESPACE: drmp
+  PROJECT_NAME: frontend
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    environment: develop
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Lint
+        uses: ./.github/actions/lint/
