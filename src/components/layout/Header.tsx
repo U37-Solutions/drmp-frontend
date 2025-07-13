@@ -5,11 +5,18 @@ import React from 'react';
 
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 
-const Header = async () => {
+import Logo from '@/shared/ui/components/Logo';
+
+const Header = () => {
   return (
     <AntHeader>
-      <Flex justify="space-between" align="center">
-        <Title>DRM platform</Title>
+      <Flex align="center" justify="space-between">
+        <Flex align="center" justify="space-between" gap={8}>
+          <Logo />
+          <Title level={5} style={{ margin: 0, color: '#000' }}>
+            DRM Platform
+          </Title>
+        </Flex>
         <ThemeSwitcher />
       </Flex>
     </AntHeader>
