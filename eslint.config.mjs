@@ -61,6 +61,16 @@ const eslintConfig = [
           pathGroups: [
             {
               group: 'external',
+              pattern: '@/features/**',
+              position: 'after',
+            },
+            {
+              group: 'external',
+              pattern: '@/components/**',
+              position: 'after',
+            },
+            {
+              group: 'external',
               pattern: '@/shared/**',
               position: 'after',
             },
