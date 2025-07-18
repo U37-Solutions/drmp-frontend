@@ -1,0 +1,145 @@
+@use "src/shared/ui/styles/utils/mixins" as *;
+
+.chatModalDialog {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  background: linear-gradient(90deg, #874DF1 0%, #3C7FF6 100%);
+  padding: 6px;
+
+  @include media(mobile) {
+    border-radius: 0;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-radius: 25px 25px 0 0;
+    min-height: 64px;
+
+    @include media(mobile) {
+      border-radius: 0;
+    }
+
+    &BackButton {
+      background-color: rgba(255, 255, 255, 0.35) !important;
+      border: 0 !important;
+      color: rgba(255, 255, 255, 0.95) !important;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.6) !important;
+      }
+    }
+
+    &Info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      :global {
+        .ant-avatar {
+          background-color: #fff;
+          color: #000;
+        }
+      }
+    }
+
+    &CloseButton {
+      background-color: rgba(255, 255, 255, 0.35) !important;
+      border: 0 !important;
+      color: rgba(255, 255, 255, 0.95) !important;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.6) !important;
+      }
+    }
+  }
+
+  &__chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 20px;
+
+    &MessagesWrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column-reverse;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    &Messages {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 16px;
+
+      &Separator {
+        margin: 8px 0;
+        text-align: center;
+        color: #999;
+        font-size: 12px;
+      }
+    }
+
+    &Footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px;
+      border-top: 1px solid #e8e8e8;
+
+      &Textarea {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        &Input {
+          max-width: 250px !important;
+        }
+
+        &Counter {
+          font-size: 12px;
+          color: #959595;
+          
+          &_warning {
+            color: #FF831A;
+          }
+
+          &_error {
+            color: #FF3800;
+          }
+        }
+      }
+
+      &Button {
+        border: 0 !important;
+        background: linear-gradient(90deg, #874DF1 0%, #3C7FF6 100%) !important;
+
+        &:hover {
+          background: linear-gradient(90deg, #3C7FF6 -20%, #874DF1 120%) !important;
+        }
+
+        &:disabled {
+          background: #ccc !important;
+        }
+      }
+    }
+  }
+}
+
+.dialogState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}

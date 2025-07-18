@@ -1,0 +1,44 @@
+$container--mobile: 375px;
+$container--tabletPortrait: 768px;
+$container--tabletLandscape: 1024px;
+$container--desktopSmall: 1280px;
+$container--desktopMedium: 1440px;
+$container--desktopLarge: 1920px;
+
+$mobile: "only screen and (max-width: #{$container--tabletPortrait - 1})";
+$notMobile: "only screen and (min-width: #{$container--tabletPortrait})";
+$tablet: "only screen and (min-width: #{$container--tabletPortrait}) and (max-width: #{$container--desktopSmall - 1})";
+$portrait: "only screen and (min-width: #{$container--tabletPortrait}) and (max-width: #{$container--tabletLandscape - 1})";
+$landscape: "only screen and (min-width: #{$container--tabletLandscape}) and (max-width: #{$container--desktopSmall - 1})";
+$desktopSmall: "only screen and (min-width: #{$container--desktopSmall}) and (max-width: #{$container--desktopMedium - 1})";
+$desktop: "only screen and (min-width: #{$container--desktopMedium}) and (max-width: #{$container--desktopLarge - 1})";
+$desktopBig: "only screen and (min-width: #{$container--desktopLarge})";
+$desktopAll: "only screen and (min-width: #{$container--desktopSmall})";
+
+@mixin media($type) {
+  $media: $mobile;
+
+  @if $type == mobile {
+    $media: $mobile;
+  } @else if $type == notMobile {
+    $media: $notMobile;
+  } @else if $type == portrait {
+    $media: $portrait;
+  } @else if $type == tablet {
+    $media: $tablet;
+  } @else if $type == landscape {
+    $media: $landscape;
+  } @else if $type == desktopSmall {
+    $media: $desktopSmall;
+  } @else if $type == desktop {
+    $media: $desktop;
+  } @else if $type == desktopBig {
+    $media: $desktopBig;
+  } @else if $type == desktopAll {
+    $media: $desktopAll;
+  }
+
+  @media #{$media} {
+    @content;
+  }
+}

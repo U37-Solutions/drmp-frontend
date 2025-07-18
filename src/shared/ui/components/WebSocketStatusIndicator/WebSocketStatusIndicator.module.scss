@@ -1,0 +1,13 @@
+.webSocketStatusIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__spiner {
+    :global {
+      .ant-spin-dot-item {
+        background-color: #FFDB4D !important;
+      }
+    }
+  }
+}
