@@ -16,7 +16,7 @@ const useChatsStore = create<ChatsStore>()(
     (set, get) => ({
       chats: {},
       saveChat: (companyId, chat) => set((state) => ({ chats: { ...state.chats, [companyId]: chat } })),
-      revaLidateChats: () => {
+      revalidateChats: () => {
         const chats = get().chats;
         const now = new Date();
         const filteredChats = Object.fromEntries(
@@ -43,7 +43,7 @@ export const useSaveChat = () => {
 };
 
 export const useRevalidateChats = () => {
-  return useChatsStore((state) => state.revaLidateChats);
+  return useChatsStore((state) => state.revalidateChats);
 };
 
 export const useGetSortedChats = () => {
