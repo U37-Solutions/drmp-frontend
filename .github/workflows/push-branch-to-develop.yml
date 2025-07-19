@@ -30,7 +30,8 @@ jobs:
         uses: ./.github/actions/build-and-push
         with:
           DOCKER_REGISTRY_NAME: ${{ vars.DOCKER_REGISTRY_NAME }}
-          VITE_API_URL: ${{ vars.VITE_API_URL }}
+          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_WS_URL: ${{ vars.NEXT_PUBLIC_WS_URL }}
           NAMESPACE: ${{ env.NAMESPACE }}
           PROJECT_NAME: ${{ env.PROJECT_NAME }}
 
