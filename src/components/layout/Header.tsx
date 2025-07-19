@@ -3,9 +3,8 @@ import { Header as AntHeader } from 'antd/es/layout/layout';
 import Title from 'antd/es/typography/Title';
 import React from 'react';
 
-import ThemeSwitcher from '@/components/ThemeSwitcher';
-
 import Logo from '@/shared/ui/components/Logo/Logo';
+import ThemeSwitcher from '@/shared/ui/components/ThemeSwitcher';
 
 const Header = () => {
   return (
