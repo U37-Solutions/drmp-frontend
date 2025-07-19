@@ -1,5 +1,5 @@
-import styles from './page.module.scss';
+import { HomePage } from '@/pages/HomePage/HomePage';
 
 export default function Home() {
-  return <div className={styles.page}>DRM Platform</div>;
+  return <HomePage />;
 }

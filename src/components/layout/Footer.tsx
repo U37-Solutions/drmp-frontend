@@ -3,7 +3,7 @@ import { Footer as AntFooter } from 'antd/es/layout/layout';
 import Title from 'antd/es/typography/Title';
 import React from 'react';
 
-import Logo from '@/shared/ui/components/Logo';
+import Logo from '@/shared/ui/components/Logo/Logo';
 
 const Footer = () => {
   return (

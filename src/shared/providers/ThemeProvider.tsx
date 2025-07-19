@@ -5,15 +5,20 @@ import React from 'react';
 
 import { DarkTheme, LightTheme } from '@/shared/ui/themes';
 
-const themeConfig: Record<string, ThemeConfig> = {
-  light: LightTheme,
-  dark: DarkTheme,
+export enum ThemeType {
+  LIGHT = 'light',
+  DARK = 'dark',
+}
+
+const themeConfig: Record<ThemeType, ThemeConfig> = {
+  [ThemeType.LIGHT]: LightTheme,
+  [ThemeType.DARK]: DarkTheme,
 };
 
-const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const currentTheme: keyof typeof themeConfig = getCookie('theme') || 'light';
+const ThemeProvider = ({ theme, children }: { theme?: ThemeType; children: React.ReactNode }) => {
+  const currentTheme: ThemeType = (getCookie('theme') as ThemeType) || ThemeType.LIGHT;
 
-  return <ConfigProvider theme={themeConfig[currentTheme]}>{children}</ConfigProvider>;
+  return <ConfigProvider theme={themeConfig[theme ?? currentTheme]}>{children}</ConfigProvider>;
 };
 
 export default ThemeProvider;

@@ -6,10 +6,13 @@ import { Layout } from 'antd';
 import type { Metadata } from 'next';
 import React from 'react';
 
+import Chat from '@/features/chat/components/Chat/Chat';
+
 import Content from '@/components/layout/Content';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 
+import QueryClientProvider from '@/shared/providers/QueryClientProvider';
 import ThemeProvider from '@/shared/providers/ThemeProvider';
 
 export const metadata: Metadata = {
@@ -28,15 +31,18 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="DRM Platform" />
       </head>
       <body>
-        <AntdRegistry>
-          <ThemeProvider>
-            <Layout>
-              <Header />
-              <Content>{children}</Content>
-              <Footer />
-            </Layout>
-          </ThemeProvider>
-        </AntdRegistry>
+        <QueryClientProvider>
+          <AntdRegistry>
+            <ThemeProvider>
+              <Layout>
+                <Header />
+                <Content>{children}</Content>
+                <Chat />
+                <Footer />
+              </Layout>
+            </ThemeProvider>
+          </AntdRegistry>
+        </QueryClientProvider>
       </body>
     </html>
   );

@@ -5,7 +5,7 @@ import React from 'react';
 
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 
-import Logo from '@/shared/ui/components/Logo';
+import Logo from '@/shared/ui/components/Logo/Logo';
 
 const Header = () => {
   return (
