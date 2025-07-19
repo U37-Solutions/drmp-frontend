@@ -8,7 +8,7 @@ import { SortOrder, getSortedChatsByDate } from './utils/getSortedChatsByDate';
 type ChatsStore = {
   chats: Record<string, Chat>;
   saveChat: (companyId: number, chat: Chat) => void;
-  revaLidateChats: () => void;
+  revalidateChats: () => void;
 };
 
 const useChatsStore = create<ChatsStore>()(
@@ -42,7 +42,7 @@ export const useSaveChat = () => {
   return useChatsStore((state) => state.saveChat);
 };
 
-export const useRevaLidateChats = () => {
+export const useRevalidateChats = () => {
   return useChatsStore((state) => state.revaLidateChats);
 };
 

@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 
 import styles from './ChatFloatButton.module.scss';
 
-import { useIsShowChatFloatButton, useRevaLidateChats } from '../../store';
+import { useIsShowChatFloatButton, useRevalidateChats } from '../../store';
 
 type ChatFloatButtonProps = {
   open: boolean;
@@ -15,11 +15,11 @@ type ChatFloatButtonProps = {
 
 const ChatFloatButton: React.FC<ChatFloatButtonProps> = ({ open, onOpen, onClose, ...props }) => {
   const isShowChatFloatButton = useIsShowChatFloatButton();
-  const revaLidateChats = useRevaLidateChats();
+  const revalidateChats = useRevalidateChats();
 
   useEffect(() => {
-    revaLidateChats();
-  }, [revaLidateChats]);
+    revalidateChats();
+  }, [revalidateChats]);
 
   return (
     isShowChatFloatButton && (
