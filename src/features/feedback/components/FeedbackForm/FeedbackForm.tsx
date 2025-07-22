@@ -1,0 +1,58 @@
+import { Button, Form, Input, Skeleton } from 'antd';
+import React from 'react';
+
+import { Feedback } from '@/features/feedback/types';
+
+import styles from './FeedbackForm.module.scss';
+
+type Props = {
+  onSubmit: (values: Feedback) => Promise<void>;
+  isLoading: boolean;
+};
+
+const FeedbackForm = ({ onSubmit, isLoading }: Props) => {
+  const [form] = Form.useForm<Feedback>();
+
+  const messageValue = Form.useWatch('message', form);
+
+  return (
+    <Form form={form} layout="vertical" requiredMark={false} className={styles.form} onFinish={onSubmit}>
+      <Skeleton loading={isLoading}>
+        <Form.Item
+          label="Повідомлення"
+          name="message"
+          rules={[{ required: true, message: 'Будь ласка, введіть ваше повідомлення', type: 'string' }]}
+        >
+          <Input.TextArea rows={2} placeholder="Введіть ваше повідомлення тут..." />
+        </Form.Item>
+
+        {!!messageValue && (
+          <>
+            <Form.Item
+              label="Як ми можемо до вас звертатися?"
+              name="name"
+              tooltip="Ваші особисті дані не будуть опубліковані. Вони можуть бути використані лише для зворотного звʼязку."
+            >
+              <Input type="text" placeholder="Імʼя (необовʼязково)" />
+            </Form.Item>
+
+            <Form.Item
+              tooltip="Ми можемо звʼязатися з вами для уточнення деталей вашого відгуку"
+              label="Електронна пошта"
+              name="email"
+              rules={[{ type: 'email', message: 'Неправильний формат електронної пошти' }]}
+            >
+              <Input type="email" placeholder="Введіть вашу електронну пошту (необовʼязково)" />
+            </Form.Item>
+          </>
+        )}
+
+        <Button type="primary" htmlType="submit" className={styles.submitButton}>
+          Надіслати
+        </Button>
+      </Skeleton>
+    </Form>
+  );
+};
+
+export default FeedbackForm;

@@ -18,7 +18,7 @@ const theme: ThemeConfig = {
       headerPadding: '16px 50px',
       headerHeight: 80,
       headerBg: '#29295b',
-      bodyBg: '#34347e',
+      bodyBg: '#16162c',
     },
   },
 };

@@ -10,7 +10,7 @@ const Footer = () => {
     <AntFooter>
       <Flex align="center" gap={8}>
         <Logo />
-        <Title level={5} style={{ margin: 0, color: '#000' }}>
+        <Title level={5} style={{ margin: 0 }}>
           <span>DRM Platform - 2025</span>
         </Title>
       </Flex>
