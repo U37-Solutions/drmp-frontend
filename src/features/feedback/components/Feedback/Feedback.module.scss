@@ -1,0 +1,20 @@
+@use "src/shared/ui/styles/utils/mixins" as *;
+
+.card:global(.ant-card) {
+  @include media(notMobile) {
+    max-width: 60%;
+    margin: 20px auto 0;
+  }
+
+  .cardBody {
+    display: flex;
+    flex-direction: column;
+
+    .successMessage {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      text-align: center;
+    }
+  }
+}

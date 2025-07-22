@@ -12,7 +12,7 @@ const Header = () => {
       <Flex align="center" justify="space-between">
         <Flex align="center" justify="space-between" gap={8}>
           <Logo />
-          <Title level={5} style={{ margin: 0, color: '#000' }}>
+          <Title level={5} style={{ margin: 0 }}>
             DRM Platform
           </Title>
         </Flex>

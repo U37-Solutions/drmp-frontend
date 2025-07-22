@@ -3,6 +3,7 @@
 import { Button } from 'antd';
 
 import { useOpenChatDialogWithActiveCompanyChat } from '@/features/chat/store';
+import Feedback from '@/features/feedback/components/Feedback/Feedback';
 
 import styles from './HomePage.module.scss';
 
@@ -44,6 +45,7 @@ export const HomePage: React.FC = () => {
           {company.name} - open chat
         </Button>
       ))}
+      <Feedback />
     </div>
   );
 };
