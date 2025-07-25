@@ -34,3 +34,12 @@ export const getChatHistory = async (accessToken: string): Promise<ChatHistoryRe
     throw error;
   }
 };
+
+// TODO: Remove this logic when proper companies fetch is implemented
+interface CompanyDTO {
+  id: number;
+  name: string;
+}
+
+export const getCompanies = async (): Promise<Array<CompanyDTO>> =>
+  await apiClient.get('/public/companies').then((res) => res.data);

@@ -1,33 +1,26 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import { Button } from 'antd';
 
+import { getCompanies } from '@/features/chat/api';
 import { useOpenChatDialogWithActiveCompanyChat } from '@/features/chat/store';
 import Feedback from '@/features/feedback/components/Feedback/Feedback';
 
 import styles from './HomePage.module.scss';
 
-// TODO: Remove this mock data when integrating with the actual backend
-const companies = [
-  {
-    id: 6,
-    name: 'Тестова організація 1',
-    avatar: null,
-  },
-  {
-    id: 7,
-    name: 'Тестова організація 2',
-    avatar: null,
-  },
-  {
-    id: 8,
-    name: 'Тестова організація 3',
-    avatar: null,
-  },
-];
-
 export const HomePage: React.FC = () => {
   const openChatDialog = useOpenChatDialogWithActiveCompanyChat();
+  const { data } = useQuery({
+    queryKey: ['companies'],
+    queryFn: getCompanies,
+  });
+
+  const companies = (data || []).map((company) => ({
+    id: company.id,
+    name: company.name,
+    avatar: null,
+  }));
 
   const handleOpenChat = (company: (typeof companies)[number]) => {
     openChatDialog({
