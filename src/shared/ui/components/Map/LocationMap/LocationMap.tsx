@@ -1,5 +1,8 @@
+'use client';
 import { Map as GoogleMap, useMap } from '@vis.gl/react-google-maps';
 import { useEffect } from 'react';
+
+import useMapBounds from '@/features/map/useMapBounds';
 
 import { environments } from '@/shared/configs/environments';
 
@@ -19,10 +22,17 @@ type LocationMapProps = {
 const LocationMap = ({ markers, selectedPosition, onPositionSelect }: LocationMapProps) => {
   const map = useMap();
 
+  useMapBounds(map, (bounds) => {
+    // TODO: Handle bounds change with a relevant request
+    // eslint-disable-next-line no-console
+    console.log('Map bounds changed:', bounds);
+  });
+
   useEffect(() => {
     if (!map || !selectedPosition) return;
 
     map.panTo(selectedPosition);
+    map.setZoom(13);
   }, [map, selectedPosition]);
 
   useEffect(() => {

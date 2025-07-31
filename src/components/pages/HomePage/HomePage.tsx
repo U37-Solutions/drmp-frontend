@@ -1,13 +1,12 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { Button, Card } from 'antd';
+import { Button } from 'antd';
 
 import { getCompanies } from '@/features/chat/api';
 import { useOpenChatDialogWithActiveCompanyChat } from '@/features/chat/store';
 import Feedback from '@/features/feedback/components/Feedback/Feedback';
-
-import LocationMap from '@/shared/ui/components/Map/LocationMap/LocationMap';
+import SuppliersMap from '@/features/map/components/SuppliersMap/SuppliersMap';
 
 import styles from './HomePage.module.scss';
 
@@ -40,9 +39,7 @@ export const HomePage: React.FC = () => {
           {company.name} - open chat
         </Button>
       ))}
-      <Card className={styles.mapCard}>
-        <LocationMap markers={[]} selectedPosition={{ lat: 0, lng: 0 }} onPositionSelect={() => {}} />
-      </Card>
+      <SuppliersMap />
       <Feedback />
     </div>
   );
