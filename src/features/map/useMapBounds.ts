@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 
-import { LocationGeometry } from '@/shared/ui/components/Map/types';
+import { GMapsBounds } from '@/features/map/types';
 
-type BoundsCallback = (bounds: { topRight: LocationGeometry; bottomLeft: LocationGeometry }) => void;
+type BoundsCallback = (bounds: GMapsBounds) => void;
 
-const useMapBounds = (map: google.maps.Map | null, onBoundsChange: BoundsCallback, debounceMs = 500) => {
+const useMapBounds = (map: google.maps.Map | null, onBoundsChange: BoundsCallback, debounceMs = 300) => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -23,8 +23,8 @@ const useMapBounds = (map: google.maps.Map | null, onBoundsChange: BoundsCallbac
         const sw = bounds.getSouthWest();
 
         onBoundsChange({
-          topRight: { lat: ne.lat(), lng: ne.lng() },
-          bottomLeft: { lat: sw.lat(), lng: sw.lng() },
+          ne: { lat: ne.lat(), lng: ne.lng() },
+          sw: { lat: sw.lat(), lng: sw.lng() },
         });
       }, debounceMs);
     };

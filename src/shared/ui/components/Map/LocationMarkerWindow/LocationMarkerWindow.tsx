@@ -1,33 +1,27 @@
-import { AdvancedMarker, InfoWindow } from '@vis.gl/react-google-maps';
+import { InfoWindow } from '@vis.gl/react-google-maps';
 import React, { useState } from 'react';
 
-import { LocationGeometry, LocationMarker } from '../types';
+import { SupplierDTO } from '@/features/map/types';
 
-import styles from './LocationMarkerWindow.module.scss';
-
-type LocationMarkerWindowProps = LocationMarker & {
-  onPositionSelect: (position: LocationGeometry | null) => void;
+type Props = {
+  item: SupplierDTO;
+  onItemSelect(item: SupplierDTO): void;
 };
 
-const LocationMarkerWindow = ({ position, content, onPositionSelect }: LocationMarkerWindowProps) => {
+const LocationMarkerWindow = ({ item }: Props) => {
   const [infoWindowOpen, setInfoWindowOpen] = useState(false);
 
-  const handleMarkerClick = () => {
-    setInfoWindowOpen(true);
-    onPositionSelect(position);
-  };
-
-  const handleInfoWindowClose = () => {
-    setInfoWindowOpen(false);
-    onPositionSelect(null);
-  };
-
   return (
-    <div className={styles.locationMarkerWindow}>
-      <AdvancedMarker position={position} clickable onClick={handleMarkerClick} />
+    <div>
       {infoWindowOpen && (
-        <InfoWindow position={position} onCloseClick={handleInfoWindowClose}>
-          <div className={styles.locationMarkerWindow__infoWindow}>{content}</div>
+        <InfoWindow
+          position={{
+            lat: item.latitude,
+            lng: item.longitude,
+          }}
+          onCloseClick={() => setInfoWindowOpen(false)}
+        >
+          <div>{item.locationName}</div>
         </InfoWindow>
       )}
     </div>

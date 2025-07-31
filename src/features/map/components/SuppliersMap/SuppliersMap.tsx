@@ -28,7 +28,7 @@ const SuppliersMap = () => {
 
   return (
     <Card className={styles.mapCard}>
-      <LocationMap markers={[]} selectedPosition={defaultCoordinates} onPositionSelect={() => {}} />
+      <LocationMap defaultBoundaries={defaultCoordinates} />
     </Card>
   );
 };
