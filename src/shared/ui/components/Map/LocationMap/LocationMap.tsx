@@ -1,39 +1,52 @@
 'use client';
+import { useQuery } from '@tanstack/react-query';
 import { Map as GoogleMap, useMap } from '@vis.gl/react-google-maps';
-import { useEffect } from 'react';
+import { getCookie } from 'cookies-next/client';
+import { useEffect, useState } from 'react';
 
+import { getMapPoints } from '@/features/map/api';
+import { GMapsBounds, SupplierDTO } from '@/features/map/types';
 import useMapBounds from '@/features/map/useMapBounds';
 
 import { environments } from '@/shared/configs/environments';
+import { ThemeType } from '@/shared/providers/ThemeProvider';
 
 import { UKRAINE_BOUNDS } from '../constants';
-import LocationMarkerWindow from '../LocationMarkerWindow/LocationMarkerWindow';
-import { LocationMarker } from '../types';
+import MapMarker from '../MapMarker/MapMarker';
 import type { LocationGeometry } from '../types';
 
 import styles from './LocationMap.module.scss';
 
 type LocationMapProps = {
-  markers: LocationMarker[];
-  selectedPosition: LocationGeometry;
-  onPositionSelect: (position: LocationGeometry | null) => void;
+  defaultBoundaries: LocationGeometry;
 };
 
-const LocationMap = ({ markers, selectedPosition, onPositionSelect }: LocationMapProps) => {
+const LocationMap = ({ defaultBoundaries }: LocationMapProps) => {
   const map = useMap();
+  const theme = getCookie('theme') as ThemeType;
+  const [bounds, setBounds] = useState<GMapsBounds | null>(null);
 
-  useMapBounds(map, (bounds) => {
-    // TODO: Handle bounds change with a relevant request
-    // eslint-disable-next-line no-console
-    console.log('Map bounds changed:', bounds);
+  const { data: mapPoints = [] } = useQuery({
+    queryKey: ['mapPoints', bounds],
+    queryFn: ({ signal }) => (bounds ? getMapPoints(bounds, signal) : []),
+    enabled: !!bounds,
   });
 
-  useEffect(() => {
-    if (!map || !selectedPosition) return;
+  useMapBounds(map, setBounds, 600);
 
-    map.panTo(selectedPosition);
+  const handleItemClick = (item: SupplierDTO) => {
+    map?.panTo({
+      lat: item.latitude,
+      lng: item.longitude,
+    });
+  };
+
+  useEffect(() => {
+    if (!map || !defaultBoundaries) return;
+
+    map.panTo(defaultBoundaries);
     map.setZoom(13);
-  }, [map, selectedPosition]);
+  }, [map, defaultBoundaries]);
 
   useEffect(() => {
     if (!map) return;
@@ -45,20 +58,16 @@ const LocationMap = ({ markers, selectedPosition, onPositionSelect }: LocationMa
   return (
     <div className={styles.locationMap}>
       <GoogleMap
-        defaultCenter={selectedPosition}
+        defaultCenter={defaultBoundaries}
         defaultZoom={6}
-        mapId={environments.mapId}
+        mapId={theme === ThemeType.DARK ? environments.darkMapId : environments.lightMapId}
         gestureHandling="greedy"
         streetViewControl={false}
         clickableIcons={false}
+        reuseMaps
       >
-        {markers.map((marker) => (
-          <LocationMarkerWindow
-            key={`${marker.position.lat},${marker.position.lng}`}
-            position={marker.position}
-            content={marker.content}
-            onPositionSelect={onPositionSelect}
-          />
+        {mapPoints.map((supplierItem) => (
+          <MapMarker key={`marker-${supplierItem.id}`} item={supplierItem} handleClick={handleItemClick} />
         ))}
       </GoogleMap>
     </div>

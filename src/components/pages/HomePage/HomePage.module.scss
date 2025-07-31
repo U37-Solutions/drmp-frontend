@@ -7,4 +7,11 @@
 
 .mapCard {
   width: 100%;
+  height: calc(100svh - 216px);
+
+  div:global(.ant-card-body) {
+    height: 100%;
+    border-radius: 12px;
+    padding: 0;
+  }
 }
