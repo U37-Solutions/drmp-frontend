@@ -1,0 +1,3 @@
+@mixin shadowed($color: rgba(0, 0, 0, 0.2), $blur: 10px, $spread: 0px) {
+  box-shadow: 0 4px $blur $spread $color;
+}

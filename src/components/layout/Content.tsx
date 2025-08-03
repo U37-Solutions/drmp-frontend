@@ -7,7 +7,7 @@ type ContentProps = {
 
 const Content = ({ children }: ContentProps) => {
   return (
-    <AntContent style={{ padding: '20px 50px', overflowY: 'scroll' }}>
+    <AntContent className="mainLayout">
       <main>{children}</main>
     </AntContent>
   );
