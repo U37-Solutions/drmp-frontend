@@ -1,0 +1,26 @@
+@use "src/shared/ui/styles/utils/mixins" as *;
+
+.description {
+  font-size: 12px;
+}
+
+.supplierDetailsHeader {
+  display: flex;
+  flex-direction: column;
+  max-width: 460px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @include media(mobile) {
+    gap: 8px;
+  }
+}
+
+.itemsListParagraph:global(.ant-typography) {
+  margin-bottom: 0;
+}
+
+button.closeBtn {
+  min-width: 32px;
+}

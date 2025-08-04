@@ -1,0 +1,40 @@
+.tag:global(.ant-tag) {
+  height: 22px;
+  //max-width: 170px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.moreText:global(.ant-typography) {
+  font-size: 1em;
+}
+
+.popover {
+  width: 300px;
+}
+
+.tagListContainer {
+  //display: grid;
+  //grid-auto-flow: column;
+  //grid-auto-columns: max-content;
+  //overflow: hidden;
+  //width: 100%;
+  //row-gap: 8px;
+
+  :global(.ant-tag):not(:only-child) {
+    //max-width: 215px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 768px) {
+    //grid-template-rows: repeat(2, auto); /* wrap to 2 rows */
+    //grid-auto-flow: row;
+
+    :global(.ant-tag):not(:only-child) {
+      //max-width: 130px;
+    }
+  }
+}

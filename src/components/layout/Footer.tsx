@@ -7,7 +7,7 @@ import Logo from '@/shared/ui/components/Logo/Logo';
 
 const Footer = () => {
   return (
-    <AntFooter>
+    <AntFooter className="footer">
       <Flex align="center" gap={8}>
         <Logo />
         <Title level={5} style={{ margin: 0 }}>
