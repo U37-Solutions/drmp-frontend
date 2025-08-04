@@ -1,3 +1,5 @@
+import { SupplierDTO } from '@/features/map/types';
+
 export const panMapToOffset = (map: google.maps.Map, latLng: google.maps.LatLngLiteral, offsetY: number) => {
   const scale = Math.pow(2, map.getZoom() || 0);
   const projection = map.getProjection();
@@ -20,3 +22,16 @@ export const panMapToOffset = (map: google.maps.Map, latLng: google.maps.LatLngL
     map.panTo(newLatLng);
   }
 };
+
+const MARKER_OFFSET = 0.00003; // Small offset to prevent marker overlap
+
+export const mapMarkersWOffset = (mapPoints: Array<SupplierDTO>) =>
+  mapPoints.reduce((acc, item) => {
+    const existing = acc.find((el) => el.latitude === item.latitude && el.longitude === item.longitude);
+    if (existing) {
+      existing.latitude += MARKER_OFFSET;
+    } else {
+      acc.push(item);
+    }
+    return acc;
+  }, [] as Array<SupplierDTO>);

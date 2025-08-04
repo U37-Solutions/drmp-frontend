@@ -9,14 +9,19 @@ import SupplierDetails from '@/shared/ui/components/Map/SupplierDetails/Supplier
 
 import styles from './MapMarker.module.scss';
 
+import AdvancedMarkerElement = google.maps.marker.AdvancedMarkerElement;
+
+const SELECTED_MARKER_Z_INDEX = 10000000;
+
 type Props = {
   item: SupplierDTO;
   handleClick: (item: SupplierDTO) => void;
   isSelected: boolean;
   handleClose(): void;
+  setMarkerRef(marker: AdvancedMarkerElement | null, id: number): void;
 };
 
-const MapMarker = ({ item, handleClick, isSelected, handleClose }: Props) => {
+const MapMarker = ({ item, handleClick, isSelected, handleClose, setMarkerRef }: Props) => {
   const renderCustomPin = useCallback(() => {
     return (
       <div className={styles.selectedMarker}>
@@ -33,8 +38,17 @@ const MapMarker = ({ item, handleClick, isSelected, handleClose }: Props) => {
     );
   }, [handleClose, isSelected, item]);
 
+  const ref = useCallback(
+    (marker: AdvancedMarkerElement) => {
+      setMarkerRef(marker, item.id);
+    },
+    [item.id, setMarkerRef],
+  );
+
   return (
     <AdvancedMarker
+      zIndex={isSelected ? SELECTED_MARKER_Z_INDEX : 0}
+      ref={ref}
       onClick={() => handleClick(item)}
       position={{
         lat: item.latitude,
