@@ -1,14 +1,15 @@
 'use client';
+import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { useQuery } from '@tanstack/react-query';
 import { Map as GoogleMap, useMap } from '@vis.gl/react-google-maps';
 import { getCookie } from 'cookies-next/client';
 import { isEqual } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { getMapPoints } from '@/features/map/api';
 import { GMapsBounds, SupplierDTO } from '@/features/map/types';
 import useMapBounds from '@/features/map/useMapBounds';
-import { panMapToOffset } from '@/features/map/utils';
+import { mapMarkersWOffset, panMapToOffset } from '@/features/map/utils';
 
 import { environments } from '@/shared/configs/environments';
 import { ThemeType } from '@/shared/providers/ThemeProvider';
@@ -18,6 +19,8 @@ import MapMarker from '../MapMarker/MapMarker';
 import type { LocationGeometry } from '../types';
 
 import styles from './LocationMap.module.scss';
+
+import AdvancedMarkerElement = google.maps.marker.AdvancedMarkerElement;
 
 type LocationMapProps = {
   defaultBoundaries: LocationGeometry;
@@ -30,6 +33,7 @@ const LocationMap = ({ defaultBoundaries }: LocationMapProps) => {
   const [mapPoints, setMapPoints] = useState<Array<SupplierDTO>>([]);
   const [bounds, setBounds] = useState<GMapsBounds | null>(null);
   const [selectedSupplier, setSelectedSupplier] = useState<SupplierDTO | null>(null);
+  const [markers, setMarkers] = useState<{ [id: number]: AdvancedMarkerElement }>({});
 
   useQuery<Array<SupplierDTO>>({
     queryKey: ['mapPoints', bounds],
@@ -37,7 +41,7 @@ const LocationMap = ({ defaultBoundaries }: LocationMapProps) => {
     enabled: !!bounds && !selectedSupplier,
     select: (data) => {
       if (!mapPoints || !isEqual(data, mapPoints)) {
-        setMapPoints(data);
+        setMapPoints(mapMarkersWOffset(data));
         return data;
       }
 
@@ -45,12 +49,41 @@ const LocationMap = ({ defaultBoundaries }: LocationMapProps) => {
     },
   });
 
-  const handleMarkerClick = (item: SupplierDTO) => {
-    if (!map) return;
+  const handleMarkerClick = useCallback(
+    (item: SupplierDTO) => {
+      if (!map) return;
 
-    panMapToOffset(map, { lat: item.latitude, lng: item.longitude }, -250);
-    setSelectedSupplier(item);
-  };
+      panMapToOffset(map, { lat: item.latitude, lng: item.longitude }, -250);
+      setSelectedSupplier(item);
+    },
+    [map],
+  );
+
+  const clusterer = useMemo(() => {
+    if (!map) return null;
+
+    return new MarkerClusterer({ map });
+  }, [map]);
+
+  useEffect(() => {
+    if (!clusterer) return;
+
+    clusterer.clearMarkers();
+    clusterer.addMarkers(Object.values(markers));
+  }, [clusterer, markers]);
+
+  const setMarkerRef = useCallback((marker: AdvancedMarkerElement | null, id: number) => {
+    setMarkers((markers) => {
+      if ((marker && markers[id]) || (!marker && !markers[id])) return markers;
+
+      if (marker) {
+        return { ...markers, [id]: marker };
+      } else {
+        delete markers[id];
+        return markers;
+      }
+    });
+  }, []);
 
   useMapBounds(map, setBounds, 600);
 
@@ -84,6 +117,7 @@ const LocationMap = ({ defaultBoundaries }: LocationMapProps) => {
             handleClick={handleMarkerClick}
             handleClose={() => setSelectedSupplier(null)}
             isSelected={selectedSupplier?.id === supplierItem.id}
+            setMarkerRef={setMarkerRef}
           />
         ))}
       </GoogleMap>

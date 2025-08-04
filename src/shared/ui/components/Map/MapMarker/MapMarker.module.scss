@@ -25,10 +25,6 @@
   &Window {
     width: 90svw;
     height: 60svh;
-    @include media(notMobile) {
-      width: 50svw;
-      height: 50svh;
-    }
     position: relative;
     margin-bottom: 16px;
     overflow-y: scroll;
@@ -36,5 +32,10 @@
     background-color: var(--ant-color-bg-base);
     border-radius: 12px;
     @include shadowed();
+
+    @include media(notMobile) {
+      width: 50svw;
+      height: 50svh;
+    }
   }
 }
