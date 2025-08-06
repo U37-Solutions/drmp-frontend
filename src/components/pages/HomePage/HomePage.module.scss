@@ -1,3 +1,5 @@
+@use "src/shared/ui/styles/utils/mixins" as *;
+
 .homepage {
   display: flex;
   flex-direction: column;
@@ -7,7 +9,11 @@
 
 .mapCard {
   width: 100%;
-  height: calc(100svh - 216px);
+  height: calc(100svh - 226px);
+
+  @include media(notMobile) {
+    height: calc(100svh - 326px);
+  }
 
   div:global(.ant-card-body) {
     height: 100%;

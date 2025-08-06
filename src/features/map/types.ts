@@ -2,6 +2,27 @@ import { LocationGeometry } from '@/shared/ui/components/Map/types';
 
 export type GMapsBounds = { ne: LocationGeometry; sw: LocationGeometry };
 
+export enum SearchBy {
+  Name = 'name',
+  Address = 'address',
+}
+
+export interface MapPointsRequestParams {
+  isFree?: boolean;
+  regionId?: number;
+  city?: string;
+  serviceIds?: Array<string>;
+  categoryIds?: Array<string>;
+  boundaries?: GMapsBounds;
+  search?: string;
+  searchBy?: SearchBy;
+}
+
+export interface DictionaryDTO {
+  id: number;
+  name: string;
+}
+
 export interface SocialMediaDTO {
   type: 'facebook' | 'instagram' | 'website';
   url: string;
