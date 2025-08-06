@@ -1,35 +1,24 @@
 'use client';
-import { Card } from 'antd';
-import React, { useEffect } from 'react';
+import { Card, Flex } from 'antd';
+import React from 'react';
+
+import Filters from '@/features/map/components/Filters/Filters';
+import useMapData from '@/features/map/useMapData';
 
 import styles from '@/components/pages/HomePage/HomePage.module.scss';
 
 import LocationMap from '@/shared/ui/components/Map/LocationMap/LocationMap';
-import { LocationGeometry } from '@/shared/ui/components/Map/types';
 
 const SuppliersMap = () => {
-  const [defaultCoordinates, setDefaultCoordinates] = React.useState<LocationGeometry>({
-    lat: 50.4501, // Kyiv latitude
-    lng: 30.5234, // Kyiv longitude
-  });
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setDefaultCoordinates({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      },
-      () => {},
-      { enableHighAccuracy: true },
-    );
-  }, []);
+  const { mapPoints, filters, setFilters } = useMapData();
 
   return (
-    <Card className={styles.mapCard}>
-      <LocationMap defaultBoundaries={defaultCoordinates} />
-    </Card>
+    <Flex vertical gap={8} style={{ width: '100%' }}>
+      <Filters filters={filters} setFilters={setFilters} />
+      <Card className={styles.mapCard}>
+        <LocationMap data={mapPoints} />
+      </Card>
+    </Flex>
   );
 };
 

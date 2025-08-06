@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useRef } from 'react';
 
 import { GMapsBounds } from '@/features/map/types';
@@ -35,7 +36,8 @@ const useMapBounds = (map: google.maps.Map | null, onBoundsChange: BoundsCallbac
       google.maps.event.removeListener(listener);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [map, onBoundsChange, debounceMs]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map, debounceMs]);
 };
 
 export default useMapBounds;

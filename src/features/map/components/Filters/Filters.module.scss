@@ -1,0 +1,53 @@
+@use "src/shared/ui/styles/utils/mixins" as *;
+
+.filters {
+  &Mobile {
+    width: 120px;
+
+    @include media(notMobile) {
+      display: none !important;
+    }
+
+    &Popover {
+      width: 340px !important;
+    }
+  }
+
+  &Desktop {
+    display: none;
+
+    @include media(notMobile) {
+      display: flex;
+
+      :global(.ant-card-body) {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.filtersWrapper {
+  flex-direction: column;
+
+  @include media(notMobile) {
+    flex-wrap: nowrap;
+    flex-direction: row;
+  }
+
+  .select, .search {
+    flex: 1 1 auto;
+    width: auto;
+  }
+}
+
+.popup:global(.ant-select-dropdown) {
+  width: 80svw !important;
+
+  @include media(notMobile) {
+    width: 40svw !important;
+  }
+}
+
+.searchByPopup:global(.ant-select-dropdown) {
+  width: 120px !important;
+}
