@@ -1,0 +1,26 @@
+@use "src/shared/ui/styles/utils/mixins" as *;
+
+.wrapper {
+  width: 100%;
+  position: relative;
+
+  .filtersWrapper {
+    width: 100%;
+  }
+
+  .mapCard {
+    width: 100%;
+    height: calc(100svh - 226px);
+
+    @include media(notMobile) {
+      height: calc(100svh - 326px);
+    }
+
+    div:global(.ant-card-body) {
+      height: 100%;
+      border-radius: 12px;
+      padding: 0;
+      overflow-y: scroll;
+    }
+  }
+}

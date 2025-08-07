@@ -30,13 +30,17 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="apple-mobile-web-app-title" content="DRM Platform" />
+        <title>
+          Механізм перенаправлення між Координаційним центром, надавачами послуг та постраждалими і свідками порушень
+          прав людини про наявні послуги
+        </title>
       </head>
       <body>
         <QueryClientProvider>
           <AntdRegistry>
             <ThemeProvider>
               <MapApiProvider>
-                <Layout>
+                <Layout style={{ minHeight: 'auto' }}>
                   <Header />
                   <Content>{children}</Content>
                   <Chat />

@@ -33,7 +33,7 @@ const CategorySelect = ({ value, onChange }: Props) => {
       maxTagCount={1}
       optionFilterProp="label"
       classNames={{ root: styles.select, popup: { root: styles.popup } }}
-      placeholder="Категоріях постраждалих"
+      placeholder="Категорії постраждалих"
       value={value}
       onChange={onChange}
       options={options}

@@ -7,7 +7,8 @@ const CitySelect = ({ value, onChange }: { value?: string; onChange(value: strin
   return (
     <Select
       classNames={{ root: styles.select, popup: { root: styles.popup } }}
-      placeholder="Місту"
+      style={{ maxWidth: 110 }}
+      placeholder="Місто"
       value={value}
       onChange={onChange}
     />

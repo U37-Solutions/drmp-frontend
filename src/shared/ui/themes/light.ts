@@ -7,7 +7,7 @@ const theme: ThemeConfig = {
   algorithm: antTheme.defaultAlgorithm,
   token: {
     fontFamily: 'e-Ukraine, sans-serif',
-    colorPrimary: '#008774',
+    colorPrimary: '#3578f3',
     colorInfo: '#5b5aff',
     colorSuccess: '#89db33',
     colorWarning: '#ffdb4d',
@@ -17,7 +17,7 @@ const theme: ThemeConfig = {
     Layout: {
       headerPadding: '16px 50px',
       headerHeight: 80,
-      headerBg: '#e1e7fd',
+      headerBg: 'rgb(161, 190, 240, 0.46)',
       // bodyBg: '#f0f2ff',
       // footerBg: '#f0f2ff',
     },

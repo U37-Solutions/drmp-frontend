@@ -12,13 +12,14 @@ const RegionSelect = ({ value, onChange }: { value?: number; onChange(value: num
       allowClear
       value={value}
       onChange={onChange}
+      style={{ maxWidth: 110 }}
       options={Object.entries(REGION_TITLE).map(([id, text]) => ({
         label: text,
         value: id,
       }))}
       getPopupContainer={(triggerNode) => triggerNode.parentElement}
       classNames={{ root: styles.select, popup: { root: styles.popup } }}
-      placeholder="Області"
+      placeholder="Область"
     />
   );
 };

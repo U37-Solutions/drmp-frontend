@@ -7,6 +7,11 @@ export enum SearchBy {
   Address = 'address',
 }
 
+export enum ViewMode {
+  Map = 'map',
+  List = 'list',
+}
+
 export interface MapPointsRequestParams {
   isFree?: boolean;
   regionId?: number;

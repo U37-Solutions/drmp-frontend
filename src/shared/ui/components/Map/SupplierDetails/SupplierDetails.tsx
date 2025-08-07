@@ -9,7 +9,7 @@ import SocialMediaLink from '@/shared/ui/components/SocialMediaLink/SocialMediaL
 
 import styles from './SupplierDetails.module.scss';
 
-const SupplierDetails = ({ data, onClose }: { data: SupplierDTO; onClose(): void }) => {
+const SupplierDetails = ({ data, onClose }: { data: SupplierDTO; onClose?(): void }) => {
   const openChatDialog = useOpenChatDialogWithActiveCompanyChat();
 
   const handleOpenChat = (supplier: SupplierDTO) => {
@@ -38,14 +38,16 @@ const SupplierDetails = ({ data, onClose }: { data: SupplierDTO; onClose(): void
             </Typography.Text>
           </Flex>
         </div>
-        <Button
-          className={styles.closeBtn}
-          icon={<CloseOutlined />}
-          onClick={(event) => {
-            event.stopPropagation();
-            onClose();
-          }}
-        />
+        {onClose && (
+          <Button
+            className={styles.closeBtn}
+            icon={<CloseOutlined />}
+            onClick={(event) => {
+              event.stopPropagation();
+              onClose();
+            }}
+          />
+        )}
       </Flex>
       <Divider style={{ margin: 0 }} />
 

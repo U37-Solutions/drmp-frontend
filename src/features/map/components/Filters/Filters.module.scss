@@ -18,6 +18,7 @@
 
     @include media(notMobile) {
       display: flex;
+      width: 100%;
 
       :global(.ant-card-body) {
         width: 100%;
@@ -37,6 +38,10 @@
   .select, .search {
     flex: 1 1 auto;
     width: auto;
+  }
+
+  .search {
+    max-width: 350px;
   }
 }
 

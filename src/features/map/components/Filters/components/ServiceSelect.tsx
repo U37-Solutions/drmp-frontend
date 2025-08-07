@@ -35,7 +35,7 @@ const ServiceSelect = ({ value, onChange }: Props) => {
       maxTagCount={1}
       optionFilterProp="label"
       classNames={{ root: styles.select, popup: { root: styles.popup } }}
-      placeholder="Категоріях допомоги"
+      placeholder="Категорії допомоги"
       value={value}
       onChange={onChange}
       options={options}
