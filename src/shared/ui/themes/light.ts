@@ -17,7 +17,7 @@ const theme: ThemeConfig = {
     Layout: {
       headerPadding: '16px 50px',
       headerHeight: 80,
-      headerBg: 'rgb(161, 190, 240, 0.46)',
+      headerBg: 'rgba(161, 190, 240, 0.46)',
       // bodyBg: '#f0f2ff',
       // footerBg: '#f0f2ff',
     },
