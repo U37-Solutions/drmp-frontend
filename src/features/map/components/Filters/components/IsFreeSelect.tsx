@@ -9,8 +9,8 @@ enum ServicePaymentType {
 }
 
 const OPTIONS = [
-  { label: 'Безкоштовні', value: ServicePaymentType.Free },
-  { label: 'Платні', value: ServicePaymentType.Paid },
+  { label: 'Безкоштовна', value: ServicePaymentType.Free },
+  { label: 'Платна', value: ServicePaymentType.Paid },
 ];
 
 type Props = {
@@ -33,7 +33,7 @@ const IsFreeSelect = ({ onChange }: Props) => {
   return (
     <Select
       mode="multiple"
-      placeholder="Виду допомоги"
+      placeholder="Вид допомоги"
       options={OPTIONS}
       classNames={{ root: styles.select, popup: { root: styles.popup } }}
       value={value}
