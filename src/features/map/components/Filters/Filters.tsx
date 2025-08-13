@@ -53,8 +53,18 @@ const Filters = ({ filters, setFilters }: Props) => {
   const filtersBody = useMemo(
     () => (
       <>
-        <RegionSelect value={filters.regionId} onChange={(value) => handleFieldChange('regionId', value)} />
-        <CitySelect value={filters.city} onChange={(value) => handleFieldChange('city', value)} />
+        <RegionSelect
+          value={filters.regionId}
+          onChange={(value) => {
+            handleFieldChange('city', undefined);
+            handleFieldChange('regionId', value);
+          }}
+        />
+        <CitySelect
+          regionId={filters.regionId}
+          value={filters.city}
+          onChange={(value) => handleFieldChange('city', value)}
+        />
         <ServiceSelect value={filters.serviceIds} onChange={(value) => handleFieldChange('serviceIds', value)} />
         <CategorySelect value={filters.categoryIds} onChange={(value) => handleFieldChange('categoryIds', value)} />
         <IsFreeSelect onChange={(value) => handleFieldChange('isFree', value)} />
