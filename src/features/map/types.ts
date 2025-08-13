@@ -28,6 +28,12 @@ export interface DictionaryDTO {
   name: string;
 }
 
+export interface CityDTO {
+  community: string;
+  object_category: string;
+  object_name: string;
+}
+
 export interface SocialMediaDTO {
   type: 'facebook' | 'instagram' | 'website';
   url: string;

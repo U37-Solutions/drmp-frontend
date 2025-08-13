@@ -1,4 +1,4 @@
-import { DictionaryDTO, MapPointsRequestParams, SupplierDTO } from '@/features/map/types';
+import { CityDTO, DictionaryDTO, MapPointsRequestParams, SupplierDTO } from '@/features/map/types';
 
 import apiClient from '@/shared/api/apiClient';
 
@@ -35,3 +35,6 @@ export const getServiceDictionary = async (): Promise<Array<DictionaryDTO>> =>
 
 export const getCategoryDictionary = async (): Promise<Array<DictionaryDTO>> =>
   await apiClient.get('/dictionary/categories').then((res) => res.data);
+
+export const getCitiesByRegion = async (regionId?: number): Promise<Array<CityDTO>> =>
+  await apiClient.get(`/dictionary/cities/${regionId}`).then((res) => res.data || []);
