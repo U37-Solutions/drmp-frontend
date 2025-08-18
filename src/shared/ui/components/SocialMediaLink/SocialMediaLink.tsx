@@ -39,7 +39,15 @@ const SocialMediaLink = ({ data }: { data: { type: ContactType; url: string } })
 
   return (
     <Tooltip title={tip}>
-      <Button variant="outlined" shape="circle" color={color} icon={icon} href={data.url} />
+      <Button
+        variant="outlined"
+        shape="circle"
+        color={color}
+        icon={icon}
+        href={data.url}
+        target="_blank"
+        rel="noopener noreferrer"
+      />
     </Tooltip>
   );
 };

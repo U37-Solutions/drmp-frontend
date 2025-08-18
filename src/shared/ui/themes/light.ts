@@ -14,12 +14,11 @@ const theme: ThemeConfig = {
     colorError: '#ff3800',
   },
   components: {
+    ...common.components,
     Layout: {
       headerPadding: '16px 50px',
       headerHeight: 80,
       headerBg: 'rgba(161, 190, 240, 0.46)',
-      // bodyBg: '#f0f2ff',
-      // footerBg: '#f0f2ff',
     },
   },
 };

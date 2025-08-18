@@ -1,4 +1,4 @@
-import { Select } from 'antd';
+import { Form, Select } from 'antd';
 import React from 'react';
 
 import styles from '@/features/map/components/Filters/Filters.module.scss';
@@ -31,14 +31,16 @@ const IsFreeSelect = ({ onChange }: Props) => {
   };
 
   return (
-    <Select
-      mode="multiple"
-      placeholder="Вид допомоги"
-      options={OPTIONS}
-      classNames={{ root: styles.select, popup: { root: styles.popup } }}
-      value={value}
-      onChange={handleChange}
-    />
+    <Form.Item label="Вид допомоги" name="servicePaymentType" layout="vertical">
+      <Select
+        mode="multiple"
+        placeholder="Вид допомоги"
+        options={OPTIONS}
+        classNames={{ root: styles.select, popup: { root: styles.popup } }}
+        value={value}
+        onChange={handleChange}
+      />
+    </Form.Item>
   );
 };
 

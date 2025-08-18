@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Select } from 'antd';
+import { Form, Select } from 'antd';
 import React, { useMemo } from 'react';
 
 import { getCitiesByRegion } from '@/features/map/api';
@@ -32,17 +32,18 @@ const CitySelect = ({ regionId, value, onChange }: Props) => {
   );
 
   return (
-    <Select
-      showSearch
-      notFoundContent={!regionId ? 'Спочатку оберіть область' : 'Міст не знайдено'}
-      options={formattedOptions}
-      classNames={{ root: styles.select, popup: { root: styles.popup } }}
-      style={{ maxWidth: 110 }}
-      placeholder="Місто"
-      value={value}
-      onChange={onChange}
-      allowClear
-    />
+    <Form.Item label="Місто" layout="vertical" name="city">
+      <Select
+        showSearch
+        notFoundContent={!regionId ? 'Спочатку оберіть область' : 'Міст не знайдено'}
+        options={formattedOptions}
+        classNames={{ root: styles.select, popup: { root: styles.popup } }}
+        placeholder="Місто"
+        value={value}
+        onChange={onChange}
+        allowClear
+      />
+    </Form.Item>
   );
 };
 

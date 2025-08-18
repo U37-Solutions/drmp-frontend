@@ -35,7 +35,7 @@
     flex-direction: row;
   }
 
-  .select, .search {
+  :global(.ant-form-item) {
     flex: 1 1 auto;
     width: auto;
   }

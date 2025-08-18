@@ -1,13 +1,18 @@
 @use "src/shared/ui/styles/utils/mixins" as *;
 
 .segmented:global(.ant-segmented) {
-  background-color: var(--ant-color-primary-border);
+  background-color: var(--ant-color-primary-text);
+  color: var(--ant-color-primary-bg-hover);
   width: auto;
+
+  position: absolute;
+  top: -42px;
+  right: 0;
 
   @include media(notMobile) {
     position: absolute;
     z-index: 2;
-    top: 99px;
-    right: 10px;
+    top: 12px;
+    right: 12px;
   }
 }

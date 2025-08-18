@@ -3,6 +3,7 @@ import { Header as AntHeader } from 'antd/es/layout/layout';
 import Title from 'antd/es/typography/Title';
 import React from 'react';
 
+import FontSizeSlider from '@/shared/ui/components/FontSizeSlider/FontSizeSlider';
 import Logo from '@/shared/ui/components/Logo/Logo';
 import ThemeSwitcher from '@/shared/ui/components/ThemeSwitcher';
 
@@ -16,7 +17,10 @@ const Header = () => {
             DRM Platform
           </Title>
         </Flex>
-        <ThemeSwitcher />
+        <Flex align="center" gap={16}>
+          <FontSizeSlider />
+          <ThemeSwitcher />
+        </Flex>
       </Flex>
     </AntHeader>
   );

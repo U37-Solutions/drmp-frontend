@@ -1,0 +1,7 @@
+.popover {
+  width: 15em;
+
+  :global(.ant-popover-inner-content) {
+    padding-inline: 12px !important;
+  }
+}

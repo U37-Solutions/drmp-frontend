@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Select } from 'antd';
+import { Form, Select } from 'antd';
 import React, { useMemo } from 'react';
 
 import { getCategoryDictionary } from '@/features/map/api';
@@ -27,17 +27,19 @@ const CategorySelect = ({ value, onChange }: Props) => {
   );
 
   return (
-    <Select
-      mode="multiple"
-      allowClear
-      maxTagCount={1}
-      optionFilterProp="label"
-      classNames={{ root: styles.select, popup: { root: styles.popup } }}
-      placeholder="Категорії постраждалих"
-      value={value}
-      onChange={onChange}
-      options={options}
-    />
+    <Form.Item label="Категорії постраждалих" layout="vertical" name="categories">
+      <Select
+        mode="multiple"
+        allowClear
+        maxTagCount={1}
+        optionFilterProp="label"
+        classNames={{ root: styles.select, popup: { root: styles.popup } }}
+        placeholder="Категорії постраждалих"
+        value={value}
+        onChange={onChange}
+        options={options}
+      />
+    </Form.Item>
   );
 };
 

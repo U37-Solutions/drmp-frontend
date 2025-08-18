@@ -1,6 +1,6 @@
 'use client';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
-import { Map as GoogleMap, useMap } from '@vis.gl/react-google-maps';
+import { Map as GoogleMap } from '@vis.gl/react-google-maps';
 import { getCookie } from 'cookies-next/client';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -20,10 +20,10 @@ import AdvancedMarkerElement = google.maps.marker.AdvancedMarkerElement;
 
 type LocationMapProps = {
   data: Array<SupplierDTO>;
+  mapInstance?: google.maps.Map | null;
 };
 
-const LocationMap = ({ data }: LocationMapProps) => {
-  const map = useMap();
+const LocationMap = ({ data, mapInstance: map }: LocationMapProps) => {
   const theme = getCookie('theme') as ThemeType;
 
   const [selectedSupplier, setSelectedSupplier] = useState<SupplierDTO | null>(null);
@@ -35,6 +35,7 @@ const LocationMap = ({ data }: LocationMapProps) => {
     (item: SupplierDTO) => {
       if (!map) return;
 
+      map.setZoom(12);
       panMapToOffset(map, { lat: item.latitude, lng: item.longitude }, -250);
       setSelectedSupplier(item);
     },
