@@ -1,6 +1,6 @@
 'use client';
 import { FilterOutlined } from '@ant-design/icons';
-import { Button, Card, Flex, Popover } from 'antd';
+import { Button, Card, Flex, Form, Popover } from 'antd';
 import React, { useCallback, useMemo } from 'react';
 
 import CategorySelect from '@/features/map/components/Filters/components/CategorySelect';
@@ -78,17 +78,20 @@ const Filters = ({ filters, setFilters }: Props) => {
     <>
       <Card className={styles.filtersDesktop}>
         <Flex gap={8} className={styles.filtersWrapper}>
-          {filtersBody}
+          <Form layout="inline">{filtersBody}</Form>
         </Flex>
       </Card>
+
       <Popover
         getPopupContainer={(triggerNode) => triggerNode.parentElement || document.body}
         rootClassName={styles.filtersMobilePopover}
         trigger={['click']}
         content={
-          <Flex gap={8} vertical className={styles.filtersWrapperMobile}>
-            {filtersBody}
-          </Flex>
+          <Form>
+            <Flex gap={8} vertical className={styles.filtersWrapperMobile}>
+              {filtersBody}
+            </Flex>
+          </Form>
         }
       >
         <Button icon={<FilterOutlined />} rootClassName={styles.filtersMobile}>

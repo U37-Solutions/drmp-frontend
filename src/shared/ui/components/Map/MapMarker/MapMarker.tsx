@@ -26,7 +26,7 @@ const MapMarker = ({ item, handleClick, isSelected, handleClose, setMarkerRef }:
     return (
       <div className={styles.selectedMarker}>
         {isSelected && (
-          <div className={styles.selectedMarkerWindow}>
+          <div className={styles.selectedMarkerWindow} onWheel={(e) => e.stopPropagation()}>
             <SupplierDetails data={item} onClose={handleClose} />
           </div>
         )}

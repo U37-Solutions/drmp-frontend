@@ -1,6 +1,6 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import { Select } from 'antd';
+import { Form, Select } from 'antd';
 import React, { useMemo } from 'react';
 
 import { getServiceDictionary } from '@/features/map/api';
@@ -29,17 +29,19 @@ const ServiceSelect = ({ value, onChange }: Props) => {
   );
 
   return (
-    <Select
-      mode="multiple"
-      allowClear
-      maxTagCount={1}
-      optionFilterProp="label"
-      classNames={{ root: styles.select, popup: { root: styles.popup } }}
-      placeholder="Категорії допомоги"
-      value={value}
-      onChange={onChange}
-      options={options}
-    />
+    <Form.Item label="Допомога" layout="vertical" name="services">
+      <Select
+        mode="multiple"
+        allowClear
+        maxTagCount={1}
+        optionFilterProp="label"
+        classNames={{ root: styles.select, popup: { root: styles.popup } }}
+        placeholder="Категорії допомоги"
+        value={value}
+        onChange={onChange}
+        options={options}
+      />
+    </Form.Item>
   );
 };
 

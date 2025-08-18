@@ -1,5 +1,5 @@
 'use client';
-import { Input, Select } from 'antd';
+import { Form, Input, Select } from 'antd';
 import React from 'react';
 
 import { SearchBy } from '@/features/map/types';
@@ -38,13 +38,15 @@ const SearchField = ({ onSearchChange }: Props) => {
   const [searchBy, setSearchBy] = React.useState<SearchBy>(SearchBy.Name);
 
   return (
-    <Input.Search
-      allowClear
-      className={styles.search}
-      placeholder="Пошук"
-      addonBefore={<SearchBySelect searchBy={searchBy} onSearchByChange={setSearchBy} />}
-      onSearch={(value) => onSearchChange(value, searchBy)}
-    />
+    <Form.Item label="Пошук" layout="vertical" name="search">
+      <Input.Search
+        allowClear
+        className={styles.search}
+        placeholder="Пошук"
+        addonBefore={<SearchBySelect searchBy={searchBy} onSearchByChange={setSearchBy} />}
+        onSearch={(value) => onSearchChange(value, searchBy)}
+      />
+    </Form.Item>
   );
 };
 

@@ -1,6 +1,6 @@
 'use client';
 import { useMap } from '@vis.gl/react-google-maps';
-import { Select } from 'antd';
+import { Form, Select } from 'antd';
 import React from 'react';
 
 import styles from '@/features/map/components/Filters/Filters.module.scss';
@@ -22,19 +22,20 @@ const RegionSelect = ({ value, onChange }: { value?: number; onChange(value: num
   };
 
   return (
-    <Select<Region>
-      allowClear
-      value={value}
-      onChange={handleRegionChange}
-      style={{ maxWidth: 110 }}
-      options={Object.entries(REGION_TITLE).map(([id, text]) => ({
-        label: text,
-        value: id,
-      }))}
-      getPopupContainer={(triggerNode) => triggerNode.parentElement}
-      classNames={{ root: styles.select, popup: { root: styles.popup } }}
-      placeholder="Область"
-    />
+    <Form.Item label="Область" layout="vertical" name="region">
+      <Select<Region>
+        allowClear
+        value={value}
+        onChange={handleRegionChange}
+        options={Object.entries(REGION_TITLE).map(([id, text]) => ({
+          label: text,
+          value: id,
+        }))}
+        getPopupContainer={(triggerNode) => triggerNode.parentElement}
+        classNames={{ root: styles.select, popup: { root: styles.popup } }}
+        placeholder="Область"
+      />
+    </Form.Item>
   );
 };
 

@@ -14,6 +14,7 @@ const theme: ThemeConfig = {
     colorError: '#ff3800',
   },
   components: {
+    ...common.components,
     Layout: {
       headerPadding: '16px 50px',
       headerHeight: 80,
