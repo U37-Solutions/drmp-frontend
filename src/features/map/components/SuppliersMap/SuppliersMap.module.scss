@@ -11,7 +11,7 @@
   .mapCard {
     position: relative;
     width: 100%;
-    height: calc(100svh - 226px);
+    height: calc(100svh - 180px);
 
     @include media(notMobile) {
       height: calc(100svh - 326px);
