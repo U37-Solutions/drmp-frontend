@@ -2,7 +2,7 @@
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { Map as GoogleMap } from '@vis.gl/react-google-maps';
 import { getCookie } from 'cookies-next/client';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 
 import { SupplierDTO } from '@/features/map/types';
 import useMapDefaultPosition from '@/features/map/useMapDefaultPosition';
@@ -20,10 +20,11 @@ import AdvancedMarkerElement = google.maps.marker.AdvancedMarkerElement;
 
 type LocationMapProps = {
   data: Array<SupplierDTO>;
+  markerClusterer: MarkerClusterer | null;
   mapInstance?: google.maps.Map | null;
 };
 
-const LocationMap = ({ data, mapInstance: map }: LocationMapProps) => {
+const LocationMap = ({ data, markerClusterer, mapInstance: map }: LocationMapProps) => {
   const theme = getCookie('theme') as ThemeType;
 
   const [selectedSupplier, setSelectedSupplier] = useState<SupplierDTO | null>(null);
@@ -35,25 +36,19 @@ const LocationMap = ({ data, mapInstance: map }: LocationMapProps) => {
     (item: SupplierDTO) => {
       if (!map) return;
 
-      map.setZoom(12);
+      map.setZoom(17);
       panMapToOffset(map, { lat: item.latitude, lng: item.longitude }, -250);
       setSelectedSupplier(item);
     },
     [map],
   );
 
-  const clusterer = useMemo(() => {
-    if (!map) return null;
-
-    return new MarkerClusterer({ map });
-  }, [map]);
-
   useEffect(() => {
-    if (!clusterer) return;
+    if (!markerClusterer) return;
 
-    clusterer.clearMarkers();
-    clusterer.addMarkers(Object.values(markers));
-  }, [clusterer, markers, data]);
+    markerClusterer.clearMarkers();
+    markerClusterer.addMarkers(Object.values(markers));
+  }, [markerClusterer, markers, data]);
 
   const setMarkerRef = useCallback((marker: AdvancedMarkerElement | null, id: number) => {
     setMarkers((markers) => {
