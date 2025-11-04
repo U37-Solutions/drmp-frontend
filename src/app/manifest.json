@@ -1,16 +1,10 @@
 {
-  "name": "DRM Platform",
+  "name": "Інформаційний портал для свідків і потерпілих від воєнних та інших міжнародних злочинів",
   "short_name": "DRMP",
   "icons": [
     {
-      "src": "/media/web-app-manifest-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/media/web-app-manifest-512x512.png",
-      "sizes": "512x512",
+      "src": "/media/logo-notext.png",
+      "sizes": "265x320",
       "type": "image/png",
       "purpose": "maskable"
     }

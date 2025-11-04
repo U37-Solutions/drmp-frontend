@@ -49,6 +49,8 @@ const MapMarker = ({ item, handleClick, isSelected, handleClose, setMarkerRef }:
     [item.id, setMarkerRef],
   );
 
+  if (!item.latitude || !item.longitude) return null;
+
   return (
     <AdvancedMarker
       zIndex={isSelected ? SELECTED_MARKER_Z_INDEX : 0}

@@ -29,7 +29,7 @@ const ServiceSelect = ({ value, onChange }: Props) => {
   );
 
   return (
-    <Form.Item label="Допомога" layout="vertical" name="services">
+    <Form.Item label="Вид допомоги" layout="vertical" name="services">
       <Select
         mode="multiple"
         allowClear

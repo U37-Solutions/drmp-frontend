@@ -6,7 +6,7 @@ import styles from './Logo.module.scss';
 
 import LogoSvg from '@/../../public/media/logo.svg';
 
-enum LogoSize {
+export enum LogoSize {
   SMALL = 'small',
   MEDIUM = 'medium',
   LARGE = 'large',

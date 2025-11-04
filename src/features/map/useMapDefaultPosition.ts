@@ -12,26 +12,13 @@ const useMapDefaultPosition = () => {
   });
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setDefaultCoordinates({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      },
-      () => {},
-      { enableHighAccuracy: true },
-    );
-  }, []);
-
-  useEffect(() => {
     if (!map) return;
 
     map.panTo(defaultCoordinates);
     map.setZoom(13);
   }, [map, defaultCoordinates]);
 
-  return defaultCoordinates;
+  return { defaultCoordinates, setDefaultCoordinates };
 };
 
 export default useMapDefaultPosition;

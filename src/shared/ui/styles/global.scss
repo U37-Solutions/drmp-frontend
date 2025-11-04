@@ -19,6 +19,11 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+
+  a {
+    color: var(--ant-color-primary);
+  }
 }
 
 main.mainLayout {
@@ -33,5 +38,9 @@ main.mainLayout {
 
 .footer {
   position: static;
+
+  article {
+    color: var(--ant-color-text-secondary);
+  }
 }
 
