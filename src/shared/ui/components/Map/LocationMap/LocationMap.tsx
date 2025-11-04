@@ -1,9 +1,10 @@
 'use client';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
-import { Map as GoogleMap } from '@vis.gl/react-google-maps';
+import { ControlPosition, Map as GoogleMap, MapControl } from '@vis.gl/react-google-maps';
 import { getCookie } from 'cookies-next/client';
 import { memo, useCallback, useEffect, useState } from 'react';
 
+import CenterMapByLocation from '@/features/map/components/CenterMapByLocation/CenterMapByLocation';
 import { SupplierDTO } from '@/features/map/types';
 import useMapDefaultPosition from '@/features/map/useMapDefaultPosition';
 import { panMapToOffset } from '@/features/map/utils';
@@ -30,7 +31,7 @@ const LocationMap = ({ data, markerClusterer, mapInstance: map }: LocationMapPro
   const [selectedSupplier, setSelectedSupplier] = useState<SupplierDTO | null>(null);
   const [markers, setMarkers] = useState<{ [id: number]: AdvancedMarkerElement }>({});
 
-  const defaultCenter = useMapDefaultPosition();
+  const { defaultCoordinates, setDefaultCoordinates } = useMapDefaultPosition();
 
   const handleMarkerClick = useCallback(
     (item: SupplierDTO) => {
@@ -66,7 +67,7 @@ const LocationMap = ({ data, markerClusterer, mapInstance: map }: LocationMapPro
   return (
     <div className={styles.locationMap}>
       <GoogleMap
-        defaultCenter={defaultCenter}
+        defaultCenter={defaultCoordinates}
         defaultZoom={12}
         mapId={theme === ThemeType.DARK ? environments.darkMapId : environments.lightMapId}
         gestureHandling="greedy"
@@ -79,6 +80,9 @@ const LocationMap = ({ data, markerClusterer, mapInstance: map }: LocationMapPro
         }}
         onClick={() => setSelectedSupplier(null)}
       >
+        <MapControl position={ControlPosition.TOP_LEFT}>
+          <CenterMapByLocation onSubmit={setDefaultCoordinates} />
+        </MapControl>
         {data.map((supplierItem) => (
           <MapMarker
             key={`marker-${supplierItem.id}`}

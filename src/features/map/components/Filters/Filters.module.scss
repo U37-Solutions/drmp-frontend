@@ -35,9 +35,20 @@
     flex-direction: row;
   }
 
-  :global(.ant-form-item) {
-    flex: 1 1 auto;
-    width: auto;
+  :global(.ant-form) {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+
+    :global(.ant-form-item) {
+      flex: 1 1 auto;
+      width: auto;
+      margin-right: 0;
+
+      :global(span.ant-select-selection-placeholder) {
+        color: #606060;
+      }
+    }
   }
 
   .search {

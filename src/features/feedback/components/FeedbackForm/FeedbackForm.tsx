@@ -1,4 +1,5 @@
-import { Button, Form, Input, Skeleton } from 'antd';
+import { MailTwoTone } from '@ant-design/icons';
+import { Button, Flex, Form, Input, Skeleton, Typography } from 'antd';
 import React from 'react';
 
 import { Feedback } from '@/features/feedback/types';
@@ -44,12 +45,21 @@ const FeedbackForm = ({ onSubmit, isLoading }: Props) => {
             >
               <Input type="email" placeholder="Введіть вашу електронну пошту (необовʼязково)" />
             </Form.Item>
+
+            <Button type="primary" htmlType="submit" className={styles.submitButton}>
+              Надіслати
+            </Button>
           </>
         )}
 
-        <Button type="primary" htmlType="submit" className={styles.submitButton}>
-          Надіслати
-        </Button>
+        <Flex align="center" vertical>
+          <Typography.Title level={4}>або</Typography.Title>
+          <Typography>надішліть листа на нашу електронну пошту:</Typography>
+          <Flex gap={4} align="center">
+            <MailTwoTone />
+            <a href="mailto:wvcc@gp.gov.ua">wvcc@gp.gov.ua</a>
+          </Flex>
+        </Flex>
       </Skeleton>
     </Form>
   );

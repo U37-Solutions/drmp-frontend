@@ -23,6 +23,7 @@ const SearchBySelect = ({
       classNames={{
         popup: { root: styles.searchByPopup },
       }}
+      aria-label="Пошук за"
       value={searchBy || SearchBy.Name}
       options={searchByOptions}
       onChange={onSearchByChange}

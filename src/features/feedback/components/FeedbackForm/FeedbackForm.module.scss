@@ -1,6 +1,10 @@
 @use "src/shared/ui/styles/utils/mixins" as *;
 
 .form:global(.ant-form) {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
   @include media(notMobile) {
     width: 420px;
     margin: 20px auto 0;
@@ -9,5 +13,9 @@
   .submitButton {
     margin-top: 20px;
     width: 100%;
+
+    span {
+      color: #ecf4ff;
+    }
   }
 }

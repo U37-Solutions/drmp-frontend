@@ -17,8 +17,8 @@ import QueryClientProvider from '@/shared/providers/QueryClientProvider';
 import ThemeProvider from '@/shared/providers/ThemeProvider';
 
 export const metadata: Metadata = {
-  title: 'DRM Platform',
-  description: 'Digital referral mechanism platform',
+  title: 'Інформаційний портал для свідків і потерпілих від воєнних та інших міжнародних злочинів',
+  description: 'Інформаційний портал для свідків і потерпілих від воєнних та інших міжнародних злочинів',
 };
 
 export default function RootLayout({

@@ -7,7 +7,7 @@ const theme: ThemeConfig = {
   algorithm: antTheme.defaultAlgorithm,
   token: {
     fontFamily: 'e-Ukraine, sans-serif',
-    colorPrimary: '#3578f3',
+    colorPrimary: '#0171bb',
     colorInfo: '#5b5aff',
     colorSuccess: '#89db33',
     colorWarning: '#ffdb4d',

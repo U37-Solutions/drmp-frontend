@@ -31,10 +31,10 @@ const IsFreeSelect = ({ onChange }: Props) => {
   };
 
   return (
-    <Form.Item label="Вид допомоги" name="servicePaymentType" layout="vertical">
+    <Form.Item label="Тип послуги" name="servicePaymentType" layout="vertical">
       <Select
         mode="multiple"
-        placeholder="Вид допомоги"
+        placeholder="Безкоштовна / Платна"
         options={OPTIONS}
         classNames={{ root: styles.select, popup: { root: styles.popup } }}
         value={value}
