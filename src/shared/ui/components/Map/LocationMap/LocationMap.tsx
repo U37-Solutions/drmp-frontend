@@ -55,7 +55,6 @@ const LocationMap = ({ data }: LocationMapProps) => {
       geolocateControl: false,
       dragRotate: false,
       touchPitch: false,
-      attributionControl: true,
       maxBounds: [
         [UKRAINE_BOUNDS.west, UKRAINE_BOUNDS.south],
         [UKRAINE_BOUNDS.east, UKRAINE_BOUNDS.north],
