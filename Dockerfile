@@ -27,9 +27,11 @@ ARG NEXT_PUBLIC_WS_URL
 ENV NEXT_PUBLIC_WS_URL=$NEXT_PUBLIC_WS_URL
 
 RUN --mount=type=secret,id=NEXT_PUBLIC_MAP_API_KEY \
+    --mount=type=secret,id=NEXT_PUBLIC_MT_MAP_API_KEY \
     --mount=type=secret,id=NEXT_PUBLIC_LIGHT_MAP_ID \
     --mount=type=secret,id=NEXT_PUBLIC_DARK_MAP_ID \
     export NEXT_PUBLIC_MAP_API_KEY=$(cat /run/secrets/NEXT_PUBLIC_MAP_API_KEY) && \
+    export NEXT_PUBLIC_MT_MAP_API_KEY=$(cat /run/secrets/NEXT_PUBLIC_MT_MAP_API_KEY) && \
     export NEXT_PUBLIC_LIGHT_MAP_ID=$(cat /run/secrets/NEXT_PUBLIC_LIGHT_MAP_ID) && \
     export NEXT_PUBLIC_DARK_MAP_ID=$(cat /run/secrets/NEXT_PUBLIC_DARK_MAP_ID) && \
     if [ -f yarn.lock ]; then yarn run build; \

@@ -19,7 +19,7 @@ const MapContext = createContext<MapContextValue | null>(null);
 
 const MapApiProvider = ({ children }: MapApiProviderProps) => {
   const [map, setMap] = useState<Map | null>(null);
-  const mapApiKey = environments.mapApiKey;
+  const mapApiKey = environments.mtMapApiKey;
 
   const value = useMemo(
     () => ({

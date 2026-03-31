@@ -47,13 +47,13 @@ const SearchField = ({ onSearchChange }: Props) => {
       return;
     }
 
-    if (searchBy !== SearchBy.Address || !environments.mapApiKey) {
+    if (searchBy !== SearchBy.Address || !environments.mtMapApiKey) {
       onSearchChange(normalizedValue, searchBy);
       return;
     }
 
     const searchParams = new URLSearchParams({
-      key: environments.mapApiKey,
+      key: environments.mtMapApiKey,
       language: 'uk',
       country: 'ua',
       limit: '1',
