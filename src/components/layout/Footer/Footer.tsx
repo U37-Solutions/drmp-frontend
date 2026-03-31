@@ -16,8 +16,8 @@ const Footer = () => {
 
         <div className={styles.footer__contentSponsors}>
           <div className={styles.footer__contentSponsorsLogos}>
-            <img src="media/logo-iom-ua.jpg" alt="IOM" />
-            <img src="media/logo-srn-en-white.jpeg" alt="SRN" />
+            <img src="/media/logo-iom-ua.jpg" alt="IOM" />
+            <img src="/media/logo-srn-en-white.jpeg" alt="SRN" />
           </div>
 
           <Typography style={{ margin: 0, maxWidth: 700 }}>

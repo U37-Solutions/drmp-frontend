@@ -1,8 +1,9 @@
 'use client';
-import { MarkerClusterer } from '@googlemaps/markerclusterer';
-import { ControlPosition, Map as GoogleMap, MapControl } from '@vis.gl/react-google-maps';
 import { getCookie } from 'cookies-next/client';
-import { memo, useCallback, useEffect, useState } from 'react';
+import L from 'leaflet';
+import { memo, useEffect, useMemo, useState } from 'react';
+import { MapContainer, TileLayer, useMap as useLeafletMap, useMapEvents } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
 
 import CenterMapByLocation from '@/features/map/components/CenterMapByLocation/CenterMapByLocation';
 import { SupplierDTO } from '@/features/map/types';
@@ -10,6 +11,7 @@ import useMapDefaultPosition from '@/features/map/useMapDefaultPosition';
 import { panMapToOffset } from '@/features/map/utils';
 
 import { environments } from '@/shared/configs/environments';
+import { useMap } from '@/shared/providers/MapApiProvider';
 import { ThemeType } from '@/shared/providers/ThemeProvider';
 
 import { UKRAINE_BOUNDS } from '../constants';
@@ -17,85 +19,93 @@ import MapMarker from '../MapMarker/MapMarker';
 
 import styles from './LocationMap.module.scss';
 
-import AdvancedMarkerElement = google.maps.marker.AdvancedMarkerElement;
-
 type LocationMapProps = {
   data: Array<SupplierDTO>;
-  markerClusterer: MarkerClusterer | null;
-  mapInstance?: google.maps.Map | null;
 };
 
-const LocationMap = ({ data, markerClusterer, mapInstance: map }: LocationMapProps) => {
-  const theme = getCookie('theme') as ThemeType;
-
-  const [selectedSupplier, setSelectedSupplier] = useState<SupplierDTO | null>(null);
-  const [markers, setMarkers] = useState<{ [id: number]: AdvancedMarkerElement }>({});
-
-  const { defaultCoordinates, setDefaultCoordinates } = useMapDefaultPosition();
-
-  const handleMarkerClick = useCallback(
-    (item: SupplierDTO) => {
-      if (!map) return;
-
-      map.setZoom(17);
-      panMapToOffset(map, { lat: item.latitude, lng: item.longitude }, -250);
-      setSelectedSupplier(item);
-    },
-    [map],
-  );
+const BoundsSync = () => {
+  const { setMap } = useMap();
+  const map = useLeafletMap();
 
   useEffect(() => {
-    if (!markerClusterer) return;
+    setMap(map);
+    return () => setMap(null);
+  }, [map, setMap]);
 
-    markerClusterer.clearMarkers();
-    markerClusterer.addMarkers(Object.values(markers));
-  }, [markerClusterer, markers, data]);
+  return null;
+};
 
-  const setMarkerRef = useCallback((marker: AdvancedMarkerElement | null, id: number) => {
-    setMarkers((markers) => {
-      if ((marker && markers[id]) || (!marker && !markers[id])) return markers;
+const MapClickHandler = ({ onClick }: { onClick: () => void }) => {
+  useMapEvents({
+    click: () => onClick(),
+  });
 
-      if (marker) {
-        return { ...markers, [id]: marker };
-      } else {
-        delete markers[id];
-        return markers;
-      }
-    });
-  }, []);
+  return null;
+};
+
+const LocationMap = ({ data }: LocationMapProps) => {
+  const theme = getCookie('theme') as ThemeType;
+  const { map } = useMap();
+
+  const [selectedSupplier, setSelectedSupplier] = useState<SupplierDTO | null>(null);
+  const { defaultCoordinates, setDefaultCoordinates } = useMapDefaultPosition();
+
+  const mapBounds = useMemo(
+    () =>
+      L.latLngBounds(
+        [UKRAINE_BOUNDS.south, UKRAINE_BOUNDS.west],
+        [UKRAINE_BOUNDS.north, UKRAINE_BOUNDS.east],
+      ),
+    [],
+  );
 
   return (
     <div className={styles.locationMap}>
-      <GoogleMap
-        defaultCenter={defaultCoordinates}
-        defaultZoom={12}
-        mapId={theme === ThemeType.DARK ? environments.darkMapId : environments.lightMapId}
-        gestureHandling="greedy"
-        streetViewControl={false}
-        clickableIcons={false}
-        disableDefaultUI
-        reuseMaps
-        restriction={{
-          latLngBounds: UKRAINE_BOUNDS,
-        }}
-        onClick={() => setSelectedSupplier(null)}
+      <MapContainer
+        center={defaultCoordinates}
+        zoom={12}
+        minZoom={6}
+        maxZoom={19}
+        zoomControl={false}
+        maxBounds={mapBounds}
+        maxBoundsViscosity={1}
+        className={styles.locationMapContent}
       >
-        <MapControl position={ControlPosition.TOP_LEFT}>
-          <CenterMapByLocation onSubmit={setDefaultCoordinates} />
-        </MapControl>
-        {data.map((supplierItem) => (
-          <MapMarker
-            key={`marker-${supplierItem.id}`}
-            item={supplierItem}
-            handleClick={handleMarkerClick}
-            handleClose={() => {
-              setSelectedSupplier(null);
-            }}
-            isSelected={selectedSupplier?.id === supplierItem.id}
-            setMarkerRef={setMarkerRef}
-          />
-        ))}
-      </GoogleMap>
+        <BoundsSync />
+        <MapClickHandler onClick={() => setSelectedSupplier(null)} />
+        <TileLayer
+          url={theme === ThemeType.DARK ? environments.darkTileUrl : environments.lightTileUrl}
+          attribution={
+            theme === ThemeType.DARK
+              ? environments.darkTileAttribution
+              : environments.lightTileAttribution
+          }
+        />
+        <MarkerClusterGroup chunkedLoading>
+          {data.map((supplierItem) => (
+            <MapMarker
+              key={`marker-${supplierItem.id}`}
+              item={supplierItem}
+              handleClick={(item) => {
+                if (!map) return;
+                map.setZoom(17, { animate: true });
+                panMapToOffset(map, [item.latitude, item.longitude], -250);
+                setSelectedSupplier(item);
+              }}
+              handleClose={() => {
+                setSelectedSupplier(null);
+              }}
+              isSelected={selectedSupplier?.id === supplierItem.id}
+            />
+          ))}
+        </MarkerClusterGroup>
+      </MapContainer>
+      <div className={styles.controls}>
+        <CenterMapByLocation onSubmit={setDefaultCoordinates} />
+      </div>
+      <div className={styles.licenseNotice}>
+        Map data: OpenStreetMap contributors, geocoding: Photon (Komoot) / OpenStreetMap.
+      </div>
     </div>
   );
 };

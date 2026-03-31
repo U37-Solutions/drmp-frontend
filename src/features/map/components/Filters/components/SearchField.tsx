@@ -2,7 +2,9 @@
 import { Form, Input, Select } from 'antd';
 import React from 'react';
 
+import { searchPhotonLocations } from '@/features/map/api';
 import { SearchBy } from '@/features/map/types';
+import { useMap } from '@/shared/providers/MapApiProvider';
 
 import styles from '../Filters.module.scss';
 
@@ -37,6 +39,26 @@ type Props = {
 
 const SearchField = ({ onSearchChange }: Props) => {
   const [searchBy, setSearchBy] = React.useState<SearchBy>(SearchBy.Name);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const { map } = useMap();
+
+  const handleSearch = async (value: string) => {
+    const nextValue = value.trim();
+    onSearchChange(nextValue, searchBy);
+
+    if (!nextValue || searchBy !== SearchBy.Address) return;
+
+    setIsLoading(true);
+    try {
+      const results = await searchPhotonLocations(nextValue);
+      const firstResult = results[0];
+      if (firstResult && map) {
+        map.setView([firstResult.lat, firstResult.lng], 14, { animate: true });
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Form.Item label="Пошук" layout="vertical" name="search">
@@ -44,8 +66,9 @@ const SearchField = ({ onSearchChange }: Props) => {
         allowClear
         className={styles.search}
         placeholder="Пошук"
+        loading={isLoading}
         addonBefore={<SearchBySelect searchBy={searchBy} onSearchByChange={setSearchBy} />}
-        onSearch={(value) => onSearchChange(value, searchBy)}
+        onSearch={handleSearch}
       />
     </Form.Item>
   );

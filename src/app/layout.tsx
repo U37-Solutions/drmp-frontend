@@ -1,5 +1,8 @@
 import '@/shared/ui/styles/global.scss';
 import '@ant-design/v5-patch-for-react-19';
+import 'leaflet/dist/leaflet.css';
+import 'react-leaflet-cluster/dist/assets/MarkerCluster.css';
+import 'react-leaflet-cluster/dist/assets/MarkerCluster.Default.css';
 
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { Layout } from 'antd';

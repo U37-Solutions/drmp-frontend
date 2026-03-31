@@ -1,11 +1,12 @@
 'use client';
+import type { Map } from 'leaflet';
 import { useEffect, useRef } from 'react';
 
 import { GMapsBounds } from '@/features/map/types';
 
 type BoundsCallback = (bounds: GMapsBounds) => void;
 
-const useMapBounds = (map: google.maps.Map | null, onBoundsChange: BoundsCallback, debounceMs = 300) => {
+const useMapBounds = (map: Map | null, onBoundsChange: BoundsCallback, debounceMs = 300) => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -30,10 +31,10 @@ const useMapBounds = (map: google.maps.Map | null, onBoundsChange: BoundsCallbac
       }, debounceMs);
     };
 
-    const listener = google.maps.event.addListener(map, 'idle', handleIdle);
+    map.on('moveend', handleIdle);
 
     return () => {
-      google.maps.event.removeListener(listener);
+      map.off('moveend', handleIdle);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

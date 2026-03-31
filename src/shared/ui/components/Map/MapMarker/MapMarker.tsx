@@ -1,7 +1,9 @@
 'use client';
 import { BankOutlined } from '@ant-design/icons';
-import { AdvancedMarker } from '@vis.gl/react-google-maps';
 import React, { useCallback } from 'react';
+import { DivIcon } from 'leaflet';
+import { Marker, Popup } from 'react-leaflet';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 import { SupplierDTO } from '@/features/map/types';
 
@@ -9,60 +11,53 @@ import SupplierDetails from '@/shared/ui/components/Map/SupplierDetails/Supplier
 
 import styles from './MapMarker.module.scss';
 
-import AdvancedMarkerElement = google.maps.marker.AdvancedMarkerElement;
-
-const SELECTED_MARKER_Z_INDEX = 10000000;
-
 type Props = {
   item: SupplierDTO;
   handleClick: (item: SupplierDTO) => void;
   isSelected: boolean;
   handleClose(): void;
-  setMarkerRef(marker: AdvancedMarkerElement | null, id: number): void;
 };
 
-const MapMarker = ({ item, handleClick, isSelected, handleClose, setMarkerRef }: Props) => {
-  const renderCustomPin = useCallback(() => {
-    return (
-      <div className={styles.selectedMarker}>
-        {isSelected && (
-          <div
-            className={styles.selectedMarkerWindow}
-            onWheel={(e) => e.stopPropagation()}
-            onScroll={(e) => e.stopPropagation()}
-          >
-            <SupplierDetails data={item} onClose={handleClose} />
-          </div>
-        )}
-
+const MapMarker = ({ item, handleClick, isSelected, handleClose }: Props) => {
+  const markerIcon = useCallback(() => {
+    return new DivIcon({
+      html: renderToStaticMarkup(
         <div className={styles.marker}>
           <BankOutlined />
-        </div>
-      </div>
-    );
-  }, [handleClose, isSelected, item]);
-
-  const ref = useCallback(
-    (marker: AdvancedMarkerElement) => {
-      setMarkerRef(marker, item.id);
-    },
-    [item.id, setMarkerRef],
-  );
+        </div>,
+      ),
+      className: '',
+      iconSize: [30, 30],
+      iconAnchor: [15, 15],
+      popupAnchor: [0, -18],
+    });
+  }, []);
 
   if (!item.latitude || !item.longitude) return null;
 
   return (
-    <AdvancedMarker
-      zIndex={isSelected ? SELECTED_MARKER_Z_INDEX : 0}
-      ref={ref}
-      onClick={() => handleClick(item)}
-      position={{
-        lat: item.latitude,
-        lng: item.longitude,
+    <Marker
+      zIndexOffset={isSelected ? 10000 : 0}
+      eventHandlers={{
+        click: () => handleClick(item),
       }}
+      position={[item.latitude, item.longitude]}
+      icon={markerIcon()}
     >
-      {renderCustomPin()}
-    </AdvancedMarker>
+      {isSelected && (
+        <Popup
+          closeButton={false}
+          closeOnEscapeKey
+          autoPan={false}
+          className={styles.leafletPopup}
+          eventHandlers={{ remove: handleClose }}
+        >
+          <div className={styles.selectedMarkerWindow}>
+            <SupplierDetails data={item} onClose={handleClose} />
+          </div>
+        </Popup>
+      )}
+    </Marker>
   );
 };
 
