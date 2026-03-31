@@ -9,6 +9,7 @@ import ViewToggler from '@/features/map/components/ViewToggler/ViewToggler';
 import { GMapsBounds, ViewMode } from '@/features/map/types';
 import useMapBounds from '@/features/map/useMapBounds';
 import useMapData from '@/features/map/useMapData';
+
 import { useMap } from '@/shared/providers/MapApiProvider';
 
 import styles from './SuppliersMap.module.scss';

@@ -41,7 +41,10 @@ const toResult = (features: Array<PhotonFeature>) =>
     })
     .filter((item): item is { id: string; label: string; lat: number; lng: number } => item !== null);
 
-const cache = new Map<string, { expiresAt: number; items: Array<{ id: string; label: string; lat: number; lng: number }> }>();
+const cache = new Map<
+  string,
+  { expiresAt: number; items: Array<{ id: string; label: string; lat: number; lng: number }> }
+>();
 const rateLimiter = new Map<string, Array<number>>();
 
 const getClientIp = (req: NextRequest) => {

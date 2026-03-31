@@ -1,9 +1,9 @@
 'use client';
 import { BankOutlined } from '@ant-design/icons';
-import React, { useCallback } from 'react';
 import { DivIcon } from 'leaflet';
-import { Marker, Popup } from 'react-leaflet';
+import React, { useCallback } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { Marker, Popup } from 'react-leaflet';
 
 import { SupplierDTO } from '@/features/map/types';
 

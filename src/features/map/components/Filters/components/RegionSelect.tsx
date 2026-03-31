@@ -3,8 +3,8 @@ import { Form, Select } from 'antd';
 import React from 'react';
 
 import styles from '@/features/map/components/Filters/Filters.module.scss';
-import { useMap } from '@/shared/providers/MapApiProvider';
 
+import { useMap } from '@/shared/providers/MapApiProvider';
 import { REGION_INFO, REGION_TITLE, Region } from '@/shared/utils/region';
 
 const RegionSelect = ({ value, onChange }: { value?: number; onChange(value: number): void }) => {

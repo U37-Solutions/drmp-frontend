@@ -51,11 +51,7 @@ const LocationMap = ({ data }: LocationMapProps) => {
   const { defaultCoordinates, setDefaultCoordinates } = useMapDefaultPosition();
 
   const mapBounds = useMemo(
-    () =>
-      L.latLngBounds(
-        [UKRAINE_BOUNDS.south, UKRAINE_BOUNDS.west],
-        [UKRAINE_BOUNDS.north, UKRAINE_BOUNDS.east],
-      ),
+    () => L.latLngBounds([UKRAINE_BOUNDS.south, UKRAINE_BOUNDS.west], [UKRAINE_BOUNDS.north, UKRAINE_BOUNDS.east]),
     [],
   );
 
@@ -75,11 +71,7 @@ const LocationMap = ({ data }: LocationMapProps) => {
         <MapClickHandler onClick={() => setSelectedSupplier(null)} />
         <TileLayer
           url={theme === ThemeType.DARK ? environments.darkTileUrl : environments.lightTileUrl}
-          attribution={
-            theme === ThemeType.DARK
-              ? environments.darkTileAttribution
-              : environments.lightTileAttribution
-          }
+          attribution={theme === ThemeType.DARK ? environments.darkTileAttribution : environments.lightTileAttribution}
         />
         <MarkerClusterGroup chunkedLoading>
           {data.map((supplierItem) => (

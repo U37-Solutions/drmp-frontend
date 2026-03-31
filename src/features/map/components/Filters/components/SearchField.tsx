@@ -4,6 +4,7 @@ import React from 'react';
 
 import { searchPhotonLocations } from '@/features/map/api';
 import { SearchBy } from '@/features/map/types';
+
 import { useMap } from '@/shared/providers/MapApiProvider';
 
 import styles from '../Filters.module.scss';
