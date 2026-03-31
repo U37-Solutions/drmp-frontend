@@ -1,7 +1,9 @@
-import { Typography } from "antd";
-import { Footer as AntFooter } from "antd/es/layout/layout";
-import Logo, { LogoSize } from "@/shared/ui/components/Logo/Logo";
-import styles from "./Footer.module.scss";
+import { Typography } from 'antd';
+import { Footer as AntFooter } from 'antd/es/layout/layout';
+
+import Logo, { LogoSize } from '@/shared/ui/components/Logo/Logo';
+
+import styles from './Footer.module.scss';
 
 const Footer = () => {
   return (
@@ -21,10 +23,11 @@ const Footer = () => {
           </div>
 
           <Typography style={{ margin: 0, maxWidth: 700 }}>
-            Дисклеймер:<br />
+            Дисклеймер:
+            <br />
             Платформа розроблена за сприяння Міжнародної організації з міграції (МОМ) та
-            фінансової підтримки мережі «Дії ООН проти сексуального насильства
-            в умовах конфлікту»
+            фінансової підтримки мережі
+            «Дії ООН проти сексуального насильства в умовах конфлікту»
           </Typography>
         </div>
       </div>
