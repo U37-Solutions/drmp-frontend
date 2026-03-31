@@ -25,8 +25,8 @@ const useMapBounds = (map: Map | null, onBoundsChange: BoundsCallback, debounceM
         const sw = bounds.getSouthWest();
 
         onBoundsChange({
-          ne: { lat: ne.lat(), lng: ne.lng() },
-          sw: { lat: sw.lat(), lng: sw.lng() },
+          ne: { lat: ne.lat, lng: ne.lng },
+          sw: { lat: sw.lat, lng: sw.lng },
         });
       }, debounceMs);
     };
