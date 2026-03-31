@@ -1,24 +1,37 @@
 'use client';
-import { useMap } from '@vis.gl/react-google-maps';
 import { Form, Select } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import styles from '@/features/map/components/Filters/Filters.module.scss';
 
+import { useMapInstance } from '@/shared/providers/MapApiProvider';
 import { REGION_INFO, REGION_TITLE, Region } from '@/shared/utils/region';
 
-const RegionSelect = ({ value, onChange }: { value?: number; onChange(value: number): void }) => {
-  const map = useMap();
+const focusRegion = (map: NonNullable<ReturnType<typeof useMapInstance>['map']>, regionId: Region) => {
+  const regionBounds = REGION_INFO[regionId];
+  if (!regionBounds) return;
 
-  const handleRegionChange = (regionId: Region) => {
+  map.fitBounds(
+    [
+      [regionBounds.west, regionBounds.south],
+      [regionBounds.east, regionBounds.north],
+    ],
+    { padding: 24, duration: 350 },
+  );
+};
+
+const RegionSelect = ({ value, onChange }: { value?: number; onChange(value?: number): void }) => {
+  const { map } = useMapInstance();
+
+  useEffect(() => {
+    if (!map || value == null) return;
+    focusRegion(map, Number(value) as Region);
+  }, [map, value]);
+
+  const handleRegionChange = (regionId?: Region) => {
     onChange(regionId);
-    if (map) {
-      const regionBounds = REGION_INFO[regionId];
-      if (regionBounds) {
-        map.fitBounds(regionBounds);
-        map.setZoom(9);
-      }
-    }
+    if (regionId == null) return;
+    if (map) focusRegion(map, regionId);
   };
 
   return (
@@ -29,7 +42,7 @@ const RegionSelect = ({ value, onChange }: { value?: number; onChange(value: num
         onChange={handleRegionChange}
         options={Object.entries(REGION_TITLE).map(([id, text]) => ({
           label: text,
-          value: id,
+          value: Number(id),
         }))}
         getPopupContainer={(triggerNode) => triggerNode.parentElement}
         classNames={{ root: styles.select, popup: { root: styles.popup } }}

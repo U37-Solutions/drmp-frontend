@@ -1,6 +1,24 @@
 .locationMap {
+  position: relative;
   width: 100%;
   height: 100%;
+
+  :global(.maplibregl-ctrl-compass) {
+    display: none !important;
+  }
+
+  &Canvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+  }
+
+  &Control {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+  }
 
   &Content {
     border-radius: 12px;
