@@ -2,7 +2,6 @@
 
 import dynamic from 'next/dynamic';
 import { memo } from 'react';
-
 import type { MapRef } from 'react-map-gl/maplibre';
 
 import { SupplierDTO } from '@/features/map/types';

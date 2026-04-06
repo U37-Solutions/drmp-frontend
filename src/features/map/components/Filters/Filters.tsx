@@ -74,15 +74,7 @@ const Filters = ({ filters, setFilters, mapRef }: Props) => {
         <SearchField mapRef={mapRef} onSearchChange={handleSearch} />
       </>
     ),
-    [
-      filters.categoryIds,
-      filters.city,
-      filters.regionId,
-      filters.serviceIds,
-      handleSearch,
-      handleFieldChange,
-      mapRef,
-    ],
+    [filters.categoryIds, filters.city, filters.regionId, filters.serviceIds, handleSearch, handleFieldChange, mapRef],
   );
 
   return (

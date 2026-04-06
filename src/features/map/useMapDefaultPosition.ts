@@ -1,7 +1,7 @@
 'use client';
 
-import { useMap } from 'react-map-gl/maplibre';
 import { useEffect, useState } from 'react';
+import { useMap } from 'react-map-gl/maplibre';
 
 import { LocationGeometry } from '@/shared/ui/components/Map/types';
 
