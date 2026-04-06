@@ -12,7 +12,6 @@ import Content from '@/components/layout/Content/Content';
 import Footer from '@/components/layout/Footer/Footer';
 import Header from '@/components/layout/Header/Header';
 
-import MapApiProvider from '@/shared/providers/MapApiProvider';
 import QueryClientProvider from '@/shared/providers/QueryClientProvider';
 import ThemeProvider from '@/shared/providers/ThemeProvider';
 
@@ -39,14 +38,12 @@ export default function RootLayout({
         <QueryClientProvider>
           <AntdRegistry>
             <ThemeProvider>
-              <MapApiProvider>
-                <Layout style={{ minHeight: 'auto' }}>
-                  <Header />
-                  <Content>{children}</Content>
-                  <Chat />
-                  <Footer />
-                </Layout>
-              </MapApiProvider>
+              <Layout style={{ minHeight: 'auto' }}>
+                <Header />
+                <Content>{children}</Content>
+                <Chat />
+                <Footer />
+              </Layout>
             </ThemeProvider>
           </AntdRegistry>
         </QueryClientProvider>

@@ -1,22 +1,26 @@
 'use client';
-import { useMap } from '@vis.gl/react-google-maps';
+
+import { useMap } from 'react-map-gl/maplibre';
 import { useEffect, useState } from 'react';
 
 import { LocationGeometry } from '@/shared/ui/components/Map/types';
 
+const DEFAULT_CENTER: LocationGeometry = {
+  lat: 48.3794,
+  lng: 31.1656,
+};
+
+/**
+ * Must be rendered as a descendant of react-map-gl Map.
+ */
 const useMapDefaultPosition = () => {
-  const map = useMap();
-  const [defaultCoordinates, setDefaultCoordinates] = useState<LocationGeometry>({
-    lat: 50.4501, // Kyiv latitude
-    lng: 30.5234, // Kyiv longitude
-  });
+  const { current: mapRef } = useMap();
+  const [defaultCoordinates, setDefaultCoordinates] = useState<LocationGeometry>(DEFAULT_CENTER);
 
   useEffect(() => {
-    if (!map) return;
-
-    map.panTo(defaultCoordinates);
-    map.setZoom(13);
-  }, [map, defaultCoordinates]);
+    if (!mapRef) return;
+    mapRef.flyTo({ center: [defaultCoordinates.lng, defaultCoordinates.lat], zoom: 13, essential: true });
+  }, [mapRef, defaultCoordinates]);
 
   return { defaultCoordinates, setDefaultCoordinates };
 };

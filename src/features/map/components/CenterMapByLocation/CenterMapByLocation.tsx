@@ -12,7 +12,7 @@ interface Props {
 }
 
 const CenterMapByLocation = ({ onSubmit }: Props) => {
-  const handleClick = () => {
+  const handleGeolocate = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         onSubmit({
@@ -26,17 +26,15 @@ const CenterMapByLocation = ({ onSubmit }: Props) => {
   };
 
   return (
-    <>
-      <Tooltip title="Відцентрувати карту по локації. Ваша локація не зберігається та не передається нікуди. Вона використовується лише для відцентрування карти.">
-        <Button
-          className={styles.button}
-          onClick={handleClick}
-          color="primary"
-          variant="solid"
-          icon={<CompassOutlined />}
-        />
-      </Tooltip>
-    </>
+    <Tooltip title="Відцентрувати карту по локації. Ваша локація не зберігається та не передається нікуди. Вона використовується лише для відцентрування карти.">
+      <Button
+        className={styles.button}
+        onClick={handleGeolocate}
+        color="primary"
+        variant="solid"
+        icon={<CompassOutlined />}
+      />
+    </Tooltip>
   );
 };
 

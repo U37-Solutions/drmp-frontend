@@ -8,6 +8,17 @@
     width: 100%;
   }
 
+  .cardContent {
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .cardContentScrollable {
+    overflow-y: auto;
+  }
+
   .mapCard {
     position: relative;
     width: 100%;
@@ -21,7 +32,10 @@
       height: 100%;
       border-radius: 12px;
       padding: 0;
-      overflow-y: scroll;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 0;
     }
   }
 }
