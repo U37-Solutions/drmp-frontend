@@ -1,6 +1,8 @@
-import { Typography } from 'antd';
+import { Flex } from 'antd';
 import { Footer as AntFooter } from 'antd/es/layout/layout';
+import Text from 'antd/es/typography/Text';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import Logo, { LogoSize } from '@/shared/ui/components/Logo/Logo';
 
@@ -9,43 +11,64 @@ import styles from './Footer.module.scss';
 const Footer = () => {
   return (
     <AntFooter className={styles.footer}>
-      <div className={styles.footer__content}>
-        <div className={styles.footer__contentMain}>
-          <Logo size={LogoSize.LARGE} />
-          <Typography style={{ margin: 0 }}>
+      <div className={styles.footer__inner}>
+        <div className={styles.footer__brand}>
+          <Text className={styles.footer__tagline}>
             Інформаційний портал для свідків і потерпілих від воєнних та інших міжнародних злочинів
-          </Typography>
+          </Text>
+          <Logo size={LogoSize.LARGE} />
         </div>
 
-        <div className={styles.footer__contentSponsors}>
-          <div className={styles.footer__contentSponsorsLogos}>
-            <Image
-              className={styles.footer__contentSponsorsLogosImage}
-              src="/media/logo-iom-ua.jpg"
-              alt="IOM"
-              width={300}
-              height={150}
-              sizes="150px"
-              style={{ width: '150px', height: 'auto' }}
-            />
-            <Image
-              className={styles.footer__contentSponsorsLogosImage}
-              src="/media/logo-srn-en-white.jpeg"
-              alt="SRN"
-              width={300}
-              height={150}
-              sizes="150px"
-              style={{ width: '150px', height: 'auto' }}
-            />
+        <div className={styles.footer__separator} />
+
+        <Text className={styles.footer__partnersLabel}>За підтримки:</Text>
+
+        <div className={styles.footer__partners}>
+          <div className={styles.footer__logos}>
+            <div className={styles.footer__logoItem}>
+              <Image width={110} height={55} src="/media/logo-iom-ua.png" alt="IOM" style={{ objectFit: 'contain' }} />
+            </div>
+            <div className={styles.footer__logoItem}>
+              <Image
+                className={styles.footer__logoLight}
+                width={110}
+                height={32}
+                src="/media/logo-srn-en-white.png"
+                alt="SRN"
+                style={{ objectFit: 'contain' }}
+              />
+              <Image
+                className={styles.footer__logoDark}
+                width={110}
+                height={32}
+                src="/media/logo-srn-en-black.png"
+                alt="SRN"
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
+          </div>
+          <Text className={styles.footer__disclaimer}>
+            Платформа розроблена за сприяння Міжнародної організації з міграції (МОМ) та фінансової підтримки мережі
+            «Дії ООН проти сексуального насильства в умовах конфлікту».
+          </Text>
+        </div>
+
+        <div className={styles.footer__separator} />
+
+        <Flex justify="space-between" align="baseline" wrap>
+          <div className={styles.footer__legal}>
+            <Link className={styles.footer__legalLink} href="/terms">
+              Правила та умови користування
+            </Link>
           </div>
 
-          <Typography style={{ margin: 0, maxWidth: 700 }}>
-            Дисклеймер:
-            <br />
-            Платформа розроблена за сприяння Міжнародної організації з міграції (МОМ) та фінансової підтримки мережі
-            «Дії ООН проти сексуального насильства в умовах конфлікту»
-          </Typography>
-        </div>
+          <Text className={styles.footer__credits}>
+            Розроблено агенцією{' '}
+            <Link href="https://datadriven.group/" rel="noopener noreferrer" target="_blank">
+              Data<strong>Driven</strong>
+            </Link>
+          </Text>
+        </Flex>
       </div>
     </AntFooter>
   );

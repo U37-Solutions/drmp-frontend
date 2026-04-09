@@ -4,6 +4,7 @@ import '@ant-design/v5-patch-for-react-19';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { Layout } from 'antd';
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import React from 'react';
 
 import Chat from '@/features/chat/components/Chat/Chat';
@@ -20,13 +21,16 @@ export const metadata: Metadata = {
   description: 'Інформаційний портал для свідків і потерпілих від воєнних та інших міжнародних злочинів',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const theme = cookieStore.get('theme')?.value || 'light';
+
   return (
-    <html lang="en">
+    <html lang="en" data-theme={theme}>
       <head>
         <meta name="apple-mobile-web-app-title" content="DRM Platform" />
         <title>

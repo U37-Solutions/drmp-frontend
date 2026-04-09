@@ -18,6 +18,7 @@ const ThemeSwitcher = () => {
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     setCookie('theme', newTheme);
     setCurrentTheme(newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
     router.refresh();
   };
 
