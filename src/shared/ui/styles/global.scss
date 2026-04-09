@@ -29,7 +29,6 @@ body {
 main.mainLayout {
   flex-grow: 1;
   padding: 10px;
-  overflow-y: scroll;
 
   @include utils.media(notMobile) {
     padding: 20px 50px;

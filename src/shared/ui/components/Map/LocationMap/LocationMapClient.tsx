@@ -2,7 +2,7 @@
 
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import type { GeoJSONSource, MapLayerMouseEvent } from 'maplibre-gl';
+import type { GeoJSONSource, MapLayerMouseEvent, Map as MapLibreMap } from 'maplibre-gl';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Map, { Layer, Popup, Source } from 'react-map-gl/maplibre';
 import type { MapRef } from 'react-map-gl/maplibre';
@@ -20,15 +20,41 @@ import { createUkraineMapStyle } from './mapStyle';
 const UKRAINE_BOUNDS: [number, number, number, number] = [22.0, 44.0, 40.5, 52.5];
 
 const UKRAINE_CENTER = {
-  longitude: 31.1656,
-  latitude: 48.3794,
-  zoom: 6,
+  longitude: 30.5234,
+  latitude: 50.4501,
+  zoom: 11,
 };
 
 const SUPPLIERS_SOURCE_ID = 'suppliers';
 const LAYER_CLUSTERS = 'supplier-clusters';
 const LAYER_CLUSTER_COUNT = 'supplier-cluster-count';
 const LAYER_POINT = 'supplier-point';
+
+/** Bank-style pin as SVG; loaded into the map style for symbol layers. */
+const SUPPLIER_MARKER_ICON_ID = 'supplier-marker';
+
+const supplierMarkerDataUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+    <circle cx="32" cy="32" r="28" fill="#1677ff" stroke="#ffffff" stroke-width="3"/>
+    <rect x="18" y="18" width="28" height="5" rx="1" fill="#e6f4ff"/>
+    <rect x="20" y="25" width="24" height="20" rx="2" fill="#e6f4ff"/>
+    <rect x="24" y="29" width="3" height="12" fill="#1677ff"/>
+    <rect x="30.5" y="29" width="3" height="12" fill="#1677ff"/>
+    <rect x="37" y="29" width="3" height="12" fill="#1677ff"/>
+  </svg>`,
+)}`;
+
+function ensureSupplierMarkerImage(map: MapLibreMap | null | undefined) {
+  if (!map || map.hasImage(SUPPLIER_MARKER_ICON_ID)) return;
+  const img = new Image(64, 64);
+  img.onload = () => {
+    if (!map.hasImage(SUPPLIER_MARKER_ICON_ID)) {
+      map.addImage(SUPPLIER_MARKER_ICON_ID, img);
+      map.triggerRepaint();
+    }
+  };
+  img.src = supplierMarkerDataUrl;
+}
 
 function MapControls() {
   const { setDefaultCoordinates } = useMapDefaultPosition();
@@ -128,7 +154,11 @@ const LocationMapClient = ({ data, onMapReady }: LocationMapClientProps) => {
         maxBounds={UKRAINE_BOUNDS}
         style={{ width: '100%', height: '100%', borderRadius: 12 }}
         interactiveLayerIds={[LAYER_CLUSTERS, LAYER_CLUSTER_COUNT, LAYER_POINT]}
-        onLoad={() => onMapReady?.(mapRef.current)}
+        onLoad={() => {
+          const mapInstance = mapRef.current?.getMap() ?? null;
+          ensureSupplierMarkerImage(mapInstance);
+          onMapReady?.(mapRef.current);
+        }}
         onClick={handleMapClick}
       >
         <MapControls />
@@ -166,13 +196,13 @@ const LocationMapClient = ({ data, onMapReady }: LocationMapClientProps) => {
           />
           <Layer
             id={LAYER_POINT}
-            type="circle"
+            type="symbol"
             filter={['!', ['has', 'point_count']]}
-            paint={{
-              'circle-color': '#1677ff',
-              'circle-radius': 15,
-              'circle-stroke-width': 2,
-              'circle-stroke-color': '#ffffff',
+            layout={{
+              'icon-image': SUPPLIER_MARKER_ICON_ID,
+              'icon-size': 0.55,
+              'icon-allow-overlap': true,
+              'icon-ignore-placement': true,
             }}
           />
         </Source>
@@ -183,7 +213,7 @@ const LocationMapClient = ({ data, onMapReady }: LocationMapClientProps) => {
             anchor="bottom"
             offset={[0, -24]}
             onClose={() => setSelectedSupplier(null)}
-            closeButton
+            closeButton={false}
             closeOnClick={false}
             maxWidth="560px"
           >
