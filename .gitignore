@@ -20,6 +20,7 @@
 
 # IDE configs
 .idea
+.cursor
 
 # misc
 .DS_Store

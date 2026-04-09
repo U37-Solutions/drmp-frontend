@@ -1,6 +1,6 @@
 import { Flex } from 'antd';
 import { Header as AntHeader } from 'antd/es/layout/layout';
-import React from 'react';
+import Link from 'next/link';
 
 import FontSizeSlider from '@/shared/ui/components/FontSizeSlider/FontSizeSlider';
 import Logo, { LogoSize } from '@/shared/ui/components/Logo/Logo';
@@ -11,7 +11,9 @@ const Header = () => {
     <AntHeader>
       <Flex align="center" justify="space-between">
         <Flex align="center" justify="space-between" gap={8}>
-          <Logo size={LogoSize.LARGE} />
+          <Link href="/" style={{ display: 'flex' }}>
+            <Logo size={LogoSize.LARGE} />
+          </Link>
         </Flex>
         <Flex align="center" gap={16}>
           <FontSizeSlider />

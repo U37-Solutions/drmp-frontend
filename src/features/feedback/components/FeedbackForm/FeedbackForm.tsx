@@ -1,6 +1,5 @@
 import { MailTwoTone } from '@ant-design/icons';
 import { Button, Flex, Form, Input, Skeleton, Typography } from 'antd';
-import React from 'react';
 
 import { Feedback } from '@/features/feedback/types';
 
@@ -24,7 +23,7 @@ const FeedbackForm = ({ onSubmit, isLoading }: Props) => {
           name="message"
           rules={[{ required: true, message: 'Будь ласка, введіть ваше повідомлення', type: 'string' }]}
         >
-          <Input.TextArea rows={2} placeholder="Введіть ваше повідомлення тут..." />
+          <Input.TextArea rows={3} placeholder="Введіть ваше повідомлення тут..." />
         </Form.Item>
 
         {!!messageValue && (
