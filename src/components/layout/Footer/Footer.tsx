@@ -1,5 +1,6 @@
 import { Typography } from 'antd';
 import { Footer as AntFooter } from 'antd/es/layout/layout';
+import Image from 'next/image';
 
 import Logo, { LogoSize } from '@/shared/ui/components/Logo/Logo';
 
@@ -18,8 +19,24 @@ const Footer = () => {
 
         <div className={styles.footer__contentSponsors}>
           <div className={styles.footer__contentSponsorsLogos}>
-            <img src="/media/logo-iom-ua.jpg" alt="IOM" />
-            <img src="/media/logo-srn-en-white.jpeg" alt="SRN" />
+            <Image
+              className={styles.footer__contentSponsorsLogosImage}
+              src="/media/logo-iom-ua.jpg"
+              alt="IOM"
+              width={300}
+              height={150}
+              sizes="150px"
+              style={{ width: '150px', height: 'auto' }}
+            />
+            <Image
+              className={styles.footer__contentSponsorsLogosImage}
+              src="/media/logo-srn-en-white.jpeg"
+              alt="SRN"
+              width={300}
+              height={150}
+              sizes="150px"
+              style={{ width: '150px', height: 'auto' }}
+            />
           </div>
 
           <Typography style={{ margin: 0, maxWidth: 700 }}>

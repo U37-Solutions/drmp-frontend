@@ -1,103 +1,18 @@
 'use client';
-import { MarkerClusterer } from '@googlemaps/markerclusterer';
-import { ControlPosition, Map as GoogleMap, MapControl } from '@vis.gl/react-google-maps';
-import { getCookie } from 'cookies-next/client';
-import { memo, useCallback, useEffect, useState } from 'react';
 
-import CenterMapByLocation from '@/features/map/components/CenterMapByLocation/CenterMapByLocation';
+import dynamic from 'next/dynamic';
+import { memo } from 'react';
+import type { MapRef } from 'react-map-gl/maplibre';
+
 import { SupplierDTO } from '@/features/map/types';
-import useMapDefaultPosition from '@/features/map/useMapDefaultPosition';
-import { panMapToOffset } from '@/features/map/utils';
 
-import { environments } from '@/shared/configs/environments';
-import { ThemeType } from '@/shared/providers/ThemeProvider';
-
-import { UKRAINE_BOUNDS } from '../constants';
-import MapMarker from '../MapMarker/MapMarker';
-
-import styles from './LocationMap.module.scss';
-
-import AdvancedMarkerElement = google.maps.marker.AdvancedMarkerElement;
-
-type LocationMapProps = {
+export type LocationMapProps = {
   data: Array<SupplierDTO>;
-  markerClusterer: MarkerClusterer | null;
-  mapInstance?: google.maps.Map | null;
+  onMapReady?: (map: MapRef | null) => void;
 };
 
-const LocationMap = ({ data, markerClusterer, mapInstance: map }: LocationMapProps) => {
-  const theme = getCookie('theme') as ThemeType;
+const LocationMapClient = dynamic(() => import('./LocationMapClient'), { ssr: false });
 
-  const [selectedSupplier, setSelectedSupplier] = useState<SupplierDTO | null>(null);
-  const [markers, setMarkers] = useState<{ [id: number]: AdvancedMarkerElement }>({});
-
-  const { defaultCoordinates, setDefaultCoordinates } = useMapDefaultPosition();
-
-  const handleMarkerClick = useCallback(
-    (item: SupplierDTO) => {
-      if (!map) return;
-
-      map.setZoom(17);
-      panMapToOffset(map, { lat: item.latitude, lng: item.longitude }, -250);
-      setSelectedSupplier(item);
-    },
-    [map],
-  );
-
-  useEffect(() => {
-    if (!markerClusterer) return;
-
-    markerClusterer.clearMarkers();
-    markerClusterer.addMarkers(Object.values(markers));
-  }, [markerClusterer, markers, data]);
-
-  const setMarkerRef = useCallback((marker: AdvancedMarkerElement | null, id: number) => {
-    setMarkers((markers) => {
-      if ((marker && markers[id]) || (!marker && !markers[id])) return markers;
-
-      if (marker) {
-        return { ...markers, [id]: marker };
-      } else {
-        delete markers[id];
-        return markers;
-      }
-    });
-  }, []);
-
-  return (
-    <div className={styles.locationMap}>
-      <GoogleMap
-        defaultCenter={defaultCoordinates}
-        defaultZoom={12}
-        mapId={theme === ThemeType.DARK ? environments.darkMapId : environments.lightMapId}
-        gestureHandling="greedy"
-        streetViewControl={false}
-        clickableIcons={false}
-        disableDefaultUI
-        reuseMaps
-        restriction={{
-          latLngBounds: UKRAINE_BOUNDS,
-        }}
-        onClick={() => setSelectedSupplier(null)}
-      >
-        <MapControl position={ControlPosition.TOP_LEFT}>
-          <CenterMapByLocation onSubmit={setDefaultCoordinates} />
-        </MapControl>
-        {data.map((supplierItem) => (
-          <MapMarker
-            key={`marker-${supplierItem.id}`}
-            item={supplierItem}
-            handleClick={handleMarkerClick}
-            handleClose={() => {
-              setSelectedSupplier(null);
-            }}
-            isSelected={selectedSupplier?.id === supplierItem.id}
-            setMarkerRef={setMarkerRef}
-          />
-        ))}
-      </GoogleMap>
-    </div>
-  );
-};
+const LocationMap = (props: LocationMapProps) => <LocationMapClient {...props} />;
 
 export default memo(LocationMap);

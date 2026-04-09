@@ -1,22 +1,23 @@
 'use client';
-import { useMap } from '@vis.gl/react-google-maps';
+
 import { useEffect, useState } from 'react';
+import { useMap } from 'react-map-gl/maplibre';
 
 import { LocationGeometry } from '@/shared/ui/components/Map/types';
 
+/**
+ * Must be rendered as a descendant of react-map-gl Map.
+ * flyTo is triggered only when the user explicitly requests geolocation
+ * (i.e. setDefaultCoordinates is called), never on initial mount.
+ */
 const useMapDefaultPosition = () => {
-  const map = useMap();
-  const [defaultCoordinates, setDefaultCoordinates] = useState<LocationGeometry>({
-    lat: 50.4501, // Kyiv latitude
-    lng: 30.5234, // Kyiv longitude
-  });
+  const { current: mapRef } = useMap();
+  const [defaultCoordinates, setDefaultCoordinates] = useState<LocationGeometry | null>(null);
 
   useEffect(() => {
-    if (!map) return;
-
-    map.panTo(defaultCoordinates);
-    map.setZoom(13);
-  }, [map, defaultCoordinates]);
+    if (!mapRef || !defaultCoordinates) return;
+    mapRef.flyTo({ center: [defaultCoordinates.lng, defaultCoordinates.lat], zoom: 13, essential: true });
+  }, [mapRef, defaultCoordinates]);
 
   return { defaultCoordinates, setDefaultCoordinates };
 };

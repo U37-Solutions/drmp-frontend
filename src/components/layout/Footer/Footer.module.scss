@@ -37,8 +37,9 @@
           justify-content: center;
         }
 
-        img {
+        &Image {
           width: 150px;
+          height: auto;
 
           @include media(mobile) {
             margin: 0 auto;

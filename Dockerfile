@@ -25,13 +25,12 @@ ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ARG NEXT_PUBLIC_WS_URL
 ENV NEXT_PUBLIC_WS_URL=$NEXT_PUBLIC_WS_URL
+ARG NEXT_PUBLIC_TILES_URL
+ENV NEXT_PUBLIC_TILES_URL=$NEXT_PUBLIC_TILES_URL
+ARG NEXT_PUBLIC_NOMINATIM_URL
+ENV NEXT_PUBLIC_NOMINATIM_URL=$NEXT_PUBLIC_NOMINATIM_URL
 
-RUN --mount=type=secret,id=NEXT_PUBLIC_MAP_API_KEY \
-    --mount=type=secret,id=NEXT_PUBLIC_LIGHT_MAP_ID \
-    --mount=type=secret,id=NEXT_PUBLIC_DARK_MAP_ID \
-    export NEXT_PUBLIC_MAP_API_KEY=$(cat /run/secrets/NEXT_PUBLIC_MAP_API_KEY) && \
-    export NEXT_PUBLIC_LIGHT_MAP_ID=$(cat /run/secrets/NEXT_PUBLIC_LIGHT_MAP_ID) && \
-    export NEXT_PUBLIC_DARK_MAP_ID=$(cat /run/secrets/NEXT_PUBLIC_DARK_MAP_ID) && \
+RUN \
     if [ -f yarn.lock ]; then yarn run build; \
     elif [ -f package-lock.json ]; then npm run build; \
     elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
