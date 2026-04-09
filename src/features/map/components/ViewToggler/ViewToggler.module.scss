@@ -3,5 +3,16 @@
 .segmented:global(.ant-segmented) {
   background-color: var(--ant-color-primary-text);
   color: var(--ant-color-primary-bg-hover);
-  flex-shrink: 0;
+  width: auto;
+
+  position: absolute;
+  top: -42px;
+  right: 0;
+
+  @include media(notMobile) {
+    position: absolute;
+    z-index: 2;
+    top: 12px;
+    right: 12px;
+  }
 }

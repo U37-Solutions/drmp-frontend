@@ -2,7 +2,6 @@
 import { FilterOutlined } from '@ant-design/icons';
 import { Button, Card, Flex, Form, Popover } from 'antd';
 import React, { useCallback, useMemo } from 'react';
-import type { MapRef } from 'react-map-gl/maplibre';
 
 import CategorySelect from '@/features/map/components/Filters/components/CategorySelect';
 import CitySelect from '@/features/map/components/Filters/components/CitySelect';
@@ -17,10 +16,9 @@ import styles from './Filters.module.scss';
 type Props = {
   filters: MapPointsRequestParams;
   setFilters: React.Dispatch<React.SetStateAction<MapPointsRequestParams>>;
-  mapRef?: MapRef | null;
 };
 
-const Filters = ({ filters, setFilters, mapRef }: Props) => {
+const Filters = ({ filters, setFilters }: Props) => {
   const handleFieldChange = useCallback(
     <T extends keyof MapPointsRequestParams>(field: T, value: MapPointsRequestParams[T]) => {
       setFilters((prev) => ({
@@ -56,7 +54,6 @@ const Filters = ({ filters, setFilters, mapRef }: Props) => {
     () => (
       <>
         <RegionSelect
-          mapRef={mapRef}
           value={filters.regionId}
           onChange={(value) => {
             handleFieldChange('city', undefined);
@@ -71,10 +68,10 @@ const Filters = ({ filters, setFilters, mapRef }: Props) => {
         <ServiceSelect value={filters.serviceIds} onChange={(value) => handleFieldChange('serviceIds', value)} />
         <CategorySelect value={filters.categoryIds} onChange={(value) => handleFieldChange('categoryIds', value)} />
         <IsFreeSelect onChange={(value) => handleFieldChange('isFree', value)} />
-        <SearchField mapRef={mapRef} onSearchChange={handleSearch} />
+        <SearchField onSearchChange={handleSearch} />
       </>
     ),
-    [filters.categoryIds, filters.city, filters.regionId, filters.serviceIds, handleSearch, handleFieldChange, mapRef],
+    [filters.categoryIds, filters.city, filters.regionId, filters.serviceIds, handleSearch, handleFieldChange],
   );
 
   return (

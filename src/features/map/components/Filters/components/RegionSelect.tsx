@@ -1,33 +1,22 @@
 'use client';
+import { useMap } from '@vis.gl/react-google-maps';
 import { Form, Select } from 'antd';
 import React from 'react';
-import type { MapRef } from 'react-map-gl/maplibre';
 
 import styles from '@/features/map/components/Filters/Filters.module.scss';
 
 import { REGION_INFO, REGION_TITLE, Region } from '@/shared/utils/region';
 
-const RegionSelect = ({
-  value,
-  onChange,
-  mapRef,
-}: {
-  value?: number;
-  onChange(value: number): void;
-  mapRef?: MapRef | null;
-}) => {
+const RegionSelect = ({ value, onChange }: { value?: number; onChange(value: number): void }) => {
+  const map = useMap();
+
   const handleRegionChange = (regionId: Region) => {
     onChange(regionId);
-    if (mapRef) {
+    if (map) {
       const regionBounds = REGION_INFO[regionId];
       if (regionBounds) {
-        mapRef.fitBounds(
-          [
-            [regionBounds.west, regionBounds.south],
-            [regionBounds.east, regionBounds.north],
-          ],
-          { maxZoom: 9, padding: 24 },
-        );
+        map.fitBounds(regionBounds);
+        map.setZoom(9);
       }
     }
   };
