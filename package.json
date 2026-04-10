@@ -20,7 +20,7 @@
     "cookies-next": "^6.0.0",
     "date-fns": "^4.1.0",
     "lodash": "^4.17.21",
-    "next": "^15.3.6",
+    "next": "15.5.15",
     "react": "^19.1.2",
     "react-dom": "^19.1.2",
     "react-use-websocket": "^4.13.0",
