@@ -53,7 +53,7 @@ const FeedbackForm = ({ onSubmit, isLoading }: Props) => {
 
         <Flex align="center" vertical>
           <Typography.Title level={4}>або</Typography.Title>
-          <Typography>надішліть листа на нашу електронну пошту:</Typography>
+          <Typography style={{ textAlign: 'center' }}>надішліть листа на нашу електронну пошту:</Typography>
           <Flex gap={4} align="center">
             <MailTwoTone />
             <a href="mailto:wvcc@gp.gov.ua">wvcc@gp.gov.ua</a>
