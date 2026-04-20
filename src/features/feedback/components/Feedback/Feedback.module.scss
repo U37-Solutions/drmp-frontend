@@ -2,13 +2,14 @@
 
 .card:global(.ant-card) {
   @include media(notMobile) {
-    max-width: 75%;
+    max-width: 60%;
     margin: 20px auto 0;
   }
 
   .cardBody {
     display: flex;
     flex-direction: column;
+    padding: 40px;
 
     .successMessage {
       display: flex;
